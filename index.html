@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Guía maestra para montar un sistema de ventas automatizado en Hotmart con ChatGPT y Systeme.io sin coste de herramientas.">
+<title>Sistema de Ventas en Hotmart con ChatGPT y Systeme.io — Guía Maestra</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{--bg:#0a0e1a;--card:#0f172a;--line:#1e3a5f;--text:#e2e8f0;--muted:#94a3b8;--acc:#38bdf8;--acc2:#00d4ff;--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;--navbg:rgba(10,14,26,.94);--codebg:#060a12;--navh:58px;--fs:16px;--r:14px}
+body.light{--bg:#eef3f9;--card:#fff;--line:#c7d6e6;--text:#0b1626;--muted:#41546b;--acc:#0369a1;--acc2:#0284c7;--navbg:rgba(238,243,249,.96);--codebg:#f2f7fd}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;padding-top:var(--navh);background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:var(--fs);line-height:1.65;transition:background .25s,color .25s;overflow-x:hidden}
+h1,h2,h3,h4{line-height:1.25;margin:0 0 .5em}
+h1{font-size:1.7rem;letter-spacing:-.02em}
+h2{font-size:1.3rem;letter-spacing:-.01em;margin-top:1.5em}
+h3{font-size:1.08rem;margin-top:1.3em}
+h4{font-size:.97rem;margin-top:1.1em}
+p{margin:.6em 0}
+ul,ol{margin:.6em 0;padding-left:1.25em}
+li{margin:.32em 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.86em;background:rgba(56,189,248,.13);padding:.12em .4em;border-radius:5px;color:var(--acc);word-break:break-word}
+hr{border:0;border-top:1px solid var(--line);margin:26px 0}
+strong,b{color:var(--text)}
+#prog{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--acc),var(--acc2));z-index:40;transition:width .08s linear}
+#navbar{position:fixed;top:0;left:0;right:0;height:var(--navh);z-index:30;display:flex;align-items:center;gap:8px;padding:0 8px;background:var(--navbg);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.chips{display:flex;gap:8px;flex:1 1 auto;min-width:0;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none;padding:4px 0;scroll-behavior:smooth}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;min-height:42px;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--muted);font:inherit;font-size:.84rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .18s,color .18s,border-color .18s}
+.chip:hover{color:var(--text);border-color:var(--acc)}
+.chip:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.chip.on{background:rgba(56,189,248,.14);border-color:var(--acc);color:var(--acc)}
+#mb{flex:0 0 auto}
+.tools{display:flex;gap:4px;flex:0 0 auto}
+.tbtn{width:34px;height:42px;display:grid;place-items:center;border:1px solid var(--line);border-radius:10px;background:transparent;color:var(--muted);font:inherit;font-size:.72rem;font-weight:800;cursor:pointer;transition:color .18s,border-color .18s}
+.tbtn:hover{color:var(--acc);border-color:var(--acc)}
+.tbtn:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+#dr{position:fixed;top:var(--navh);left:0;bottom:0;width:min(330px,88vw);background:#0f172a;border-right:1px solid #1e3a5f;transform:translateX(-105%);transition:transform .25s ease;z-index:25;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;box-shadow:8px 0 32px rgba(0,0,0,.45)}
+#dr.o{transform:none}
+.dr-top{position:sticky;top:0;z-index:2;padding:10px;background:#0f172a;border-bottom:1px solid #1e3a5f}
+#q{width:100%;min-height:44px;padding:10px 12px;border-radius:8px;border:1px solid #1e3a5f;background:#0a0e1a;color:#e2e8f0;font:inherit;font-size:.9rem}
+#q::placeholder{color:#64748b}
+#q:focus{outline:2px solid #00d4ff;outline-offset:1px}
+.dr-hint{padding:6px 12px 2px;font-size:.7rem;color:#64748b;text-transform:uppercase;letter-spacing:.08em;font-weight:800}
+#drList,#drResults{padding:8px}
+#dr a{display:block;padding:12px;border-radius:8px;color:#e2e8f0;cursor:pointer;min-height:44px;text-decoration:none;font-size:.9rem;line-height:1.35;border:1px solid transparent;transition:background .16s,color .16s}
+#dr a:hover{background:#ffffff0d}
+#dr a:focus-visible{outline:2px solid #00d4ff;outline-offset:-2px}
+#dr a.on{background:#00d4ff22;color:#00d4ff;font-weight:700}
+#drResults a.res{display:block;padding:10px 12px;min-height:44px}
+#drResults a.res b{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:#38bdf8;margin-bottom:3px}
+#drResults a.res span{display:block;font-size:.8rem;color:#94a3b8;line-height:1.4}
+.nores{padding:14px;color:#94a3b8;font-size:.86rem;margin:0}
+main{max-width:980px;margin:0 auto;padding:18px 14px 90px}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.lead{font-size:1.03rem;color:var(--muted);margin:.8em 0 1.2em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin:14px 0}
+.card>h3:first-child,.card>h4:first-child{margin-top:0}
+.card.accent{border-color:var(--acc);box-shadow:0 0 0 1px rgba(56,189,248,.18) inset}
+.note{border-left:3px solid var(--acc);background:rgba(56,189,248,.07);padding:12px 14px;border-radius:0 10px 10px 0;margin:14px 0;font-size:.94rem}
+.note.warn{border-color:var(--warn);background:rgba(245,158,11,.09)}
+.note.err{border-color:var(--err);background:rgba(239,68,68,.09)}
+.note.ok{border-color:var(--ok);background:rgba(34,197,94,.09)}
+.note b{color:var(--text)}
+.note.warn b{color:var(--warn)}
+.note.err b{color:var(--err)}
+.note.ok b{color:var(--ok)}
+.note p:first-child{margin-top:0}
+.note p:last-child{margin-bottom:0}
+.step{display:flex;gap:12px;margin:16px 0;align-items:flex-start}
+.step>.n{flex:0 0 32px;height:32px;border-radius:50%;background:rgba(56,189,248,.15);color:var(--acc);display:grid;place-items:center;font-weight:800;font-size:.85rem;border:1px solid var(--acc)}
+.step>.b{flex:1 1 auto;min-width:0}
+.step>.b p:first-child{margin-top:0}
+.step>.b p:last-child{margin-bottom:0}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:.7rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;background:rgba(56,189,248,.12);color:var(--acc);border:1px solid rgba(56,189,248,.3)}
+.pill.ok{background:rgba(34,197,94,.12);color:var(--ok);border-color:rgba(34,197,94,.35)}
+.pill.warn{background:rgba(245,158,11,.12);color:var(--warn);border-color:rgba(245,158,11,.35)}
+.pill.err{background:rgba(239,68,68,.12);color:var(--err);border-color:rgba(239,68,68,.35)}
+.codebox{position:relative;margin:14px 0}
+.codebox pre{margin:0;padding:14px;padding-top:44px;background:var(--codebg);border:1px solid var(--line);border-radius:10px;overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.82rem;line-height:1.62;color:#c9d8ea;white-space:pre-wrap;word-break:break-word}
+body.light .codebox pre{color:#10243a}
+.copy{position:absolute;top:8px;right:8px;padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--acc);font:inherit;font-size:.68rem;font-weight:800;letter-spacing:.06em;cursor:pointer;transition:background .16s,color .16s,border-color .16s}
+.copy:hover{background:rgba(56,189,248,.15)}
+.copy:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.copy.ok{color:var(--ok);border-color:var(--ok);background:rgba(34,197,94,.12)}
+.copy.fail{color:var(--err);border-color:var(--err);background:rgba(239,68,68,.12)}
+.tw{overflow-x:auto;margin:14px 0;border:1px solid var(--line);border-radius:10px;-webkit-overflow-scrolling:touch}
+.tbl{width:100%;border-collapse:collapse;font-size:.86rem;min-width:540px}
+.tbl th,.tbl td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.tbl th{background:rgba(56,189,248,.08);color:var(--acc);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;font-weight:800}
+.tbl tr:last-child td{border-bottom:0}
+.tbl td:first-child{font-weight:600}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border:1px solid var(--line);border-radius:10px;margin:8px 0;cursor:pointer;min-height:44px;background:var(--card);transition:opacity .2s,border-color .2s}
+.chk:hover{border-color:var(--acc)}
+.chk input{margin-top:3px;width:18px;height:18px;accent-color:var(--acc);flex:0 0 auto;cursor:pointer}
+.chk span{flex:1 1 auto;min-width:0;font-size:.93rem}
+.chk.done{opacity:.55}
+.chk.done span{text-decoration:line-through}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--acc);background:rgba(56,189,248,.12);color:var(--acc);font:inherit;font-weight:800;font-size:.9rem;cursor:pointer;text-decoration:none;transition:background .18s,color .18s,border-color .18s,transform .12s}
+.btn:hover{background:rgba(56,189,248,.24)}
+.btn:active{transform:scale(.98)}
+.btn:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.btn.ghost{border-color:var(--line);background:transparent;color:var(--text)}
+.btn.ghost:hover{border-color:var(--acc);color:var(--acc)}
+.cta-row{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+.panel-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:34px;padding-top:18px;border-top:1px solid var(--line)}
+.pn-i{font-size:.78rem;color:var(--muted);font-weight:700;white-space:nowrap}
+details.qa{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;overflow:hidden}
+details.qa summary{cursor:pointer;padding:14px;font-weight:700;color:var(--text);list-style:none;display:flex;gap:10px;align-items:flex-start;min-height:44px;font-size:.94rem}
+details.qa summary::-webkit-details-marker{display:none}
+details.qa summary::before{content:'▸';color:var(--acc);flex:0 0 auto;transition:transform .2s;font-size:1rem;line-height:1.4}
+details.qa[open] summary::before{transform:rotate(90deg)}
+details.qa .ans{padding:12px 14px 14px 36px;color:var(--muted);border-top:1px solid var(--line);font-size:.91rem}
+details.qa .ans p{margin:.35em 0}
+.glos{display:grid;gap:10px;grid-template-columns:1fr}
+@media(min-width:680px){.glos{grid-template-columns:1fr 1fr}}
+.glos .g{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.glos .g dt{font-weight:800;color:var(--acc);font-size:.9rem;margin-bottom:4px}
+.glos .g dd{margin:0;font-size:.86rem;color:var(--muted)}
+.flow{display:grid;gap:10px;margin:16px 0}
+.flow .f{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.flow .f .fi{flex:0 0 30px;height:30px;border-radius:8px;display:grid;place-items:center;background:rgba(56,189,248,.14);color:var(--acc);font-weight:800;font-size:.8rem;border:1px solid rgba(56,189,248,.35)}
+.flow .f .ft{flex:1 1 auto;min-width:0;font-size:.9rem}
+.flow .f .ft b{display:block;color:var(--text);margin-bottom:2px}
+.flow .f .ft span{color:var(--muted)}
+.svgwrap{width:100%;max-width:420px;margin:0 auto 20px;display:block;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#060a14;aspect-ratio:4/5}
+.svgwrap svg{display:block;width:100%;height:100%}
+.svg-cap{font-size:.8rem;color:var(--muted);text-align:center;margin:-8px 0 20px;font-style:italic}
+#toTop{position:fixed;right:14px;bottom:14px;width:46px;height:46px;border-radius:50%;border:1px solid var(--acc);background:var(--card);color:var(--acc);font-size:1.1rem;font-weight:800;cursor:pointer;z-index:26;display:none;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.45);transition:background .18s}
+#toTop.show{display:grid}
+#toTop:hover{background:rgba(56,189,248,.2)}
+#toTop:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.hero-svg .a-node{animation:hNode 3.4s ease-in-out infinite}
+.hero-svg .a-link{stroke-dasharray:6 8;animation:hDash 3s linear infinite}
+.hero-svg .a-fall{animation:hFall 3.6s linear infinite}
+.hero-svg .a-rise{animation:hRise 3.2s ease-out infinite}
+.hero-svg .a-spin{transform-box:fill-box;transform-origin:center;animation:hSpin 26s linear infinite}
+.hero-svg .a-spin-rev{transform-box:fill-box;transform-origin:center;animation:hSpin 18s linear infinite reverse}
+.hero-svg .a-glow{animation:hGlow 4s ease-in-out infinite}
+.hero-svg .a-neck{transform-box:fill-box;transform-origin:center;animation:hNeck 2.6s ease-in-out infinite}
+.hero-svg .a-scan{animation:hScan 5s ease-in-out infinite}
+@keyframes hNode{0%,100%{opacity:.45}50%{opacity:1}}
+@keyframes hDash{to{stroke-dashoffset:-56}}
+@keyframes hFall{0%{transform:translateY(0);opacity:0}12%{opacity:1}82%{opacity:1}100%{transform:translateY(148px);opacity:0}}
+@keyframes hRise{0%{transform:translateY(0) scale(.85);opacity:0}18%{opacity:1}100%{transform:translateY(-78px) scale(1.05);opacity:0}}
+@keyframes hSpin{to{transform:rotate(360deg)}}
+@keyframes hGlow{0%,100%{opacity:.3}50%{opacity:.85}}
+@keyframes hNeck{0%,100%{opacity:.35;transform:scale(1)}50%{opacity:1;transform:scale(1.14)}}
+@keyframes hScan{0%,100%{transform:translateY(0);opacity:.1}50%{transform:translateY(196px);opacity:.55}}
+@media(prefers-reduced-motion:reduce){.hero-svg *{animation:none!important}.tab-panel.active{animation:none}}
+@media(max-width:480px){:root{--navh:56px}#mb{padding:0 10px;font-size:.76rem}.chip{padding:0 11px;font-size:.79rem}.tbtn{width:30px;font-size:.66rem}main{padding:14px 12px 90px}h1{font-size:1.45rem}h2{font-size:1.18rem}}
+@media print{
+@page{size:A4 portrait;margin:14mm 12mm}
+#navbar,#dr,#toTop,#prog,.copy,.panel-nav,.cta-row{display:none!important}
+body{padding-top:0!important;background:#fff!important;color:#000!important;font-size:10.5pt}
+main{max-width:none;padding:0}
+.tab-panel{display:block!important;break-before:auto}
+.card,.note,.step,.tw,details.qa{break-inside:avoid}
+.card,.note,details.qa,.glos .g,.flow .f{border-color:#bbb!important;background:#fff!important}
+.note{border-left:3px solid #666!important}
+.codebox pre{background:#f5f5f5!important;color:#000!important;border:1px solid #bbb;white-space:pre-wrap;overflow:visible}
+.tbl th{background:#eee!important;color:#000!important}
+.tw{overflow:visible;border:1px solid #bbb}
+.tbl{min-width:0}
+details.qa>.ans{display:block!important}
+details.qa summary::before{content:'•'}
+.svgwrap{max-width:300px;border:1px solid #bbb;background:#fff;break-inside:avoid}
+.hero-svg *{animation:none!important}
+.pill{background:#eee!important;color:#000!important;border-color:#999!important}
+a{color:#000!important;text-decoration:underline}
+h1,h2,h3{color:#000!important}
+.lead,.chk span,details.qa .ans,.glos .g dd{color:#222!important}
+}
+</style>
+</head>
+<body>
+<div id="prog" aria-hidden="true"></div>
+
+<nav id="navbar" aria-label="Navegación principal">
+  <button class="chip" id="mb" aria-label="Abrir índice" aria-expanded="false" aria-controls="dr">☰ Índice</button>
+  <div class="chips" id="chips" role="tablist" aria-label="Secciones del tutorial"></div>
+  <div class="tools">
+    <button class="tbtn" id="fsMinus" aria-label="Reducir tamaño de letra">A−</button>
+    <button class="tbtn" id="fsPlus" aria-label="Aumentar tamaño de letra">A+</button>
+    <button class="tbtn" id="thm" aria-label="Cambiar tema">◐</button>
+    <button class="tbtn" id="prt" aria-label="Imprimir o guardar PDF">⎙</button>
+  </div>
+</nav>
+
+<div id="dr" role="dialog" aria-label="Índice del tutorial" aria-modal="false">
+  <div class="dr-top">
+    <input id="q" type="search" placeholder="Buscar en el tutorial…" aria-label="Buscar" autocomplete="off">
+  </div>
+  <div class="dr-hint" id="drHint">Secciones</div>
+  <div id="drList"></div>
+  <div id="drResults" hidden></div>
+</div>
+
+<template id="svgSrc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid meet" class="hero-svg" role="img" aria-label="Ilustración animada de un embudo de ventas digital: una red de nodos de inteligencia artificial alimenta un embudo luminoso por el que caen leads y del que emergen monedas de comisión hacia Hotmart y Systeme.io.">
+  <defs>
+    <linearGradient id="bgG" x1="0" y1="0" x2="0.35" y2="1"><stop offset="0" stop-color="#08172b"/><stop offset="0.55" stop-color="#0a0e1a"/><stop offset="1" stop-color="#05080f"/></linearGradient>
+    <linearGradient id="funG" x1="0" y1="0" x2="0.6" y2="1"><stop offset="0" stop-color="#38bdf8" stop-opacity="0.9"/><stop offset="0.5" stop-color="#00d4ff" stop-opacity="0.55"/><stop offset="1" stop-color="#0ea5e9" stop-opacity="0.85"/></linearGradient>
+    <linearGradient id="funFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#38bdf8" stop-opacity="0.16"/><stop offset="1" stop-color="#00d4ff" stop-opacity="0.02"/></linearGradient>
+    <linearGradient id="coinG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fde68a"/><stop offset="1" stop-color="#f59e0b"/></linearGradient>
+    <radialGradient id="glowG"><stop offset="0" stop-color="#38bdf8" stop-opacity="0.55"/><stop offset="1" stop-color="#38bdf8" stop-opacity="0"/></radialGradient>
+    <radialGradient id="glowG2"><stop offset="0" stop-color="#00d4ff" stop-opacity="0.45"/><stop offset="1" stop-color="#00d4ff" stop-opacity="0"/></radialGradient>
+    <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="400" height="500" fill="url(#bgG)"/>
+  <g opacity="0.12" stroke="#38bdf8" stroke-width="1">
+    <line x1="0" y1="70" x2="400" y2="70"/><line x1="0" y1="130" x2="400" y2="130"/><line x1="0" y1="200" x2="400" y2="200"/><line x1="0" y1="300" x2="400" y2="300"/><line x1="0" y1="400" x2="400" y2="400"/><line x1="0" y1="460" x2="400" y2="460"/>
+  </g>
+  <ellipse cx="200" cy="150" rx="180" ry="120" fill="url(#glowG)" class="a-glow"/>
+  <ellipse cx="200" cy="420" rx="160" ry="90" fill="url(#glowG2)" class="a-glow" style="animation-delay:-2s"/>
+  <g stroke="#38bdf8" stroke-width="1.1" opacity="0.55">
+    <line class="a-link" x1="86" y1="78" x2="158" y2="52"/><line class="a-link" x1="158" y1="52" x2="232" y2="80"/><line class="a-link" x1="232" y1="80" x2="306" y2="58"/><line class="a-link" x1="86" y1="78" x2="200" y2="122"/><line class="a-link" x1="232" y1="80" x2="200" y2="122"/><line class="a-link" x1="158" y1="52" x2="200" y2="122"/><line class="a-link" x1="306" y1="58" x2="200" y2="122"/><line class="a-link" x1="132" y1="140" x2="200" y2="122"/><line class="a-link" x1="268" y1="140" x2="200" y2="122"/><line class="a-link" x1="132" y1="140" x2="268" y2="140"/>
+  </g>
+  <g fill="#7dd3fc" filter="url(#softGlow)">
+    <circle class="a-node" cx="86" cy="78" r="6" style="animation-delay:0s"/><circle class="a-node" cx="158" cy="52" r="5" style="animation-delay:.4s"/><circle class="a-node" cx="232" cy="80" r="7" style="animation-delay:.9s"/><circle class="a-node" cx="306" cy="58" r="5" style="animation-delay:1.3s"/><circle class="a-node" cx="132" cy="140" r="4.5" style="animation-delay:1.7s"/><circle class="a-node" cx="268" cy="140" r="4.5" style="animation-delay:2.1s"/>
+  </g>
+  <circle cx="200" cy="122" r="10" fill="#00d4ff" filter="url(#softGlow)" class="a-node" style="animation-delay:.6s"/>
+  <ellipse cx="200" cy="300" rx="158" ry="132" fill="none" stroke="#38bdf8" stroke-opacity="0.16" stroke-width="1.2" stroke-dasharray="10 16" class="a-spin"/>
+  <ellipse cx="200" cy="300" rx="126" ry="106" fill="none" stroke="#00d4ff" stroke-opacity="0.14" stroke-width="1" stroke-dasharray="5 12" class="a-spin-rev"/>
+  <path d="M70 200 L330 200 L242 402 L158 402 Z" fill="url(#funFill)" stroke="url(#funG)" stroke-width="2.4" stroke-linejoin="round"/>
+  <g stroke="#38bdf8" stroke-opacity="0.4" stroke-width="1"><line x1="92" y1="252" x2="308" y2="252"/><line x1="115" y1="302" x2="285" y2="302"/><line x1="136" y1="352" x2="264" y2="352"/></g>
+  <rect x="60" y="196" width="280" height="8" rx="4" fill="#00d4ff" opacity="0.8" filter="url(#softGlow)"/>
+  <ellipse cx="200" cy="402" rx="42" ry="9" fill="#00d4ff" opacity="0.6" class="a-neck" filter="url(#softGlow)"/>
+  <rect x="70" y="204" width="260" height="2" fill="#7dd3fc" opacity="0.2" class="a-scan"/>
+  <g fill="#7dd3fc">
+    <circle class="a-fall" cx="120" cy="90" r="3.4" style="animation-delay:0s"/><circle class="a-fall" cx="170" cy="80" r="2.6" style="animation-delay:.5s"/><circle class="a-fall" cx="225" cy="95" r="3.8" style="animation-delay:1s"/><circle class="a-fall" cx="280" cy="86" r="2.4" style="animation-delay:1.5s"/><circle class="a-fall" cx="145" cy="100" r="3" style="animation-delay:2s"/><circle class="a-fall" cx="255" cy="104" r="3.2" style="animation-delay:2.5s"/><circle class="a-fall" cx="200" cy="70" r="4.2" style="animation-delay:3s"/><circle class="a-fall" cx="100" cy="108" r="2.2" style="animation-delay:3.4s"/>
+  </g>
+  <g>
+    <g class="a-rise" style="animation-delay:0s"><circle cx="170" cy="440" r="11" fill="url(#coinG)" stroke="#fbbf24" stroke-width="1.5"/><text x="170" y="445" text-anchor="middle" font-size="12" font-weight="700" fill="#78350f" font-family="system-ui,sans-serif">$</text></g>
+    <g class="a-rise" style="animation-delay:1.1s"><circle cx="200" cy="452" r="12.5" fill="url(#coinG)" stroke="#fbbf24" stroke-width="1.5"/><text x="200" y="457" text-anchor="middle" font-size="13" font-weight="700" fill="#78350f" font-family="system-ui,sans-serif">$</text></g>
+    <g class="a-rise" style="animation-delay:2.2s"><circle cx="232" cy="440" r="10.5" fill="url(#coinG)" stroke="#fbbf24" stroke-width="1.5"/><text x="232" y="445" text-anchor="middle" font-size="12" font-weight="700" fill="#78350f" font-family="system-ui,sans-serif">$</text></g>
+  </g>
+  <ellipse cx="200" cy="430" rx="90" ry="16" fill="url(#glowG2)" class="a-glow"/>
+</svg>
+</template>
+
+<main id="main">
+
+<!-- ==================== INICIO ==================== -->
+<section class="tab-panel active" id="p-inicio" data-t="INICIO" data-short="INICIO" role="tabpanel" aria-label="Inicio">
+<div class="svgwrap" id="svgInicio" data-svg="inicio"></div>
+<p class="svg-cap">Del comentario a la comisión: un embudo que trabaja solo.</p>
+<h1>Sistema de Ventas en Hotmart con ChatGPT y Systeme.io</h1>
+<p class="lead">Guía maestra y tutorial paso a paso para montar un embudo de afiliación completo —captación, entrega de regalo, página de ventas, email marketing y métricas— <strong>sin pagar ninguna herramienta</strong>.</p>
+<div class="cta-row">
+  <button class="btn" id="ix" type="button">☰ Ver índice</button>
+  <button class="btn ghost" type="button" data-goto="1">Empezar por los conceptos →</button>
+</div>
+<div class="note">
+<p><b>Qué vas a construir exactamente.</b> Un sistema que atrae personas desde Instagram con un comentario, les entrega un recurso gratuito a cambio de su correo, les muestra una oferta inmediata mientras su atención está caliente, los invita a una comunidad de WhatsApp y los nutre con correos automáticos hasta que compran el producto de un tercero en Hotmart. Tú cobras la comisión como afiliado.</p>
+</div>
+<h2>Qué necesitas antes de empezar</h2>
+<div class="card">
+<ul>
+<li><b>Un ordenador con navegador actualizado.</b> Todo el sistema se construye en la web.</li>
+<li><b>Una cuenta de Instagram</b> (mejor si es profesional o de creador).</li>
+<li><b>Un correo electrónico</b> para los registros.</li>
+<li><b>Ganas de copiar y pegar.</b> No necesitas programar: ChatGPT escribe el código y tú lo pegas.</li>
+<li><b>Tiempo.</b> Montar el embudo completo lleva entre 4 y 8 horas de trabajo real la primera vez.</li>
+</ul>
+<p style="margin-bottom:0"><b>No necesitas:</b> hosting, diseñador, programador, ni saber HTML.</p>
+</div>
+<h2>Las tres piezas del sistema</h2>
+<div class="flow">
+<div class="f"><div class="fi">1</div><div class="ft"><b>Tráfico y atracción</b><span>Instagram + ManyChat. Publicas contenido con una palabra clave y la automatización responde por ti.</span></div></div>
+<div class="f"><div class="fi">2</div><div class="ft"><b>Captación y generación con IA</b><span>ChatGPT escribe el HTML de tus páginas; Systeme.io las aloja gratis.</span></div></div>
+<div class="f"><div class="fi">3</div><div class="ft"><b>Gestión y nutrición</b><span>Systeme.io etiqueta contactos, envía correos automáticos y guarda las métricas.</span></div></div>
+</div>
+<h2>Cómo usar este tutorial</h2>
+<div class="card">
+<p>El tutorial está dividido en pestañas que puedes recorrer en orden o consultar por separado:</p>
+<ul>
+<li><b>CONCEPTOS:</b> qué es Hotmart, cómo se cobra la comisión, qué es un Lead Magnet.</li>
+<li><b>PROCEDIMIENTO:</b> los 6 niveles de construcción, paso a paso y con resultados esperados.</li>
+<li><b>PRÁCTICA:</b> el proyecto integrador «Edición Dinámica en CapCut» y ejercicios.</li>
+<li><b>PROMPTS:</b> todos los prompts listos para copiar y pegar, con su uso.</li>
+<li><b>33 Preguntas (Q&A):</b> dudas resueltas por nivel de dificultad.</li>
+<li><b>ERRORES:</b> matriz de problemas y soluciones.</li>
+<li><b>RESUMEN:</b> métricas, proyección de facturación y glosario.</li>
+<li><b>FUENTES:</b> documentación oficial.</li>
+<li><b>CRÉDITOS:</b> autoría y versión.</li>
+</ul>
+<p style="margin-bottom:0">Arriba tienes el botón <b>☰ Índice</b> para saltar a cualquier sección, el buscador dentro del índice, y los controles de tamaño de letra, tema e impresión.</p>
+</div>
+<div class="note ok">
+<p><b>Tu progreso se guarda.</b> La pestaña en la que estás, el tamaño de letra, el tema y las casillas que marques se conservan en tu navegador. Si cierras y vuelves a abrir el archivo, seguirás donde lo dejaste.</p>
+</div>
+<div class="panel-nav"><span class="pn-i">1 / 10</span><button class="btn ghost" type="button" data-goto="1">CONCEPTOS →</button></div>
+</section>
+
+<!-- ==================== CONCEPTOS ==================== -->
+<section class="tab-panel" id="p-conceptos" data-t="CONCEPTOS: Fundamentos y Requisitos Previos" data-short="CONCEPTOS" role="tabpanel" aria-label="Conceptos">
+<h1>Fundamentos y requisitos previos</h1>
+<p class="lead">Antes de tocar una sola herramienta, necesitas entender <em>qué</em> estás montando y <em>por qué</em> cada pieza existe. Este apartado corresponde al Nivel 0 del sistema.</p>
+
+<h2>1.1 · Qué es el sistema y por qué no cuesta dinero</h2>
+<div class="card">
+<p><b>Qué es:</b> un conjunto de páginas, automatizaciones y correos que captan prospectos y los llevan hasta la compra de un producto digital de un tercero, del que cobras comisión.</p>
+<p><b>Para qué sirve:</b> para vender sin crear tu propio producto, sin atención constante y sin gastar en herramientas.</p>
+<p><b>Por qué importa:</b> el ecosistema de venta de productos digitales suele asociarse a suscripciones mensuales de diseño, hosting, email marketing y automatización. Este sistema demuestra que se puede estructurar un embudo profesional con <strong>coste cero de herramientas</strong>.</p>
+<p style="margin-bottom:0"><b>Los tres pilares:</b></p>
+<ul style="margin-bottom:0">
+<li><b>Tráfico y atracción:</b> redes sociales e Instagram con automatización de comentarios.</li>
+<li><b>Captación y generación con IA:</b> ChatGPT para generar el HTML de páginas modernas e integraciones de formularios.</li>
+<li><b>Gestión del embudo y nutrición:</b> Systeme.io para alojar la landing page, etiquetar contactos en el CRM y enviar correos automáticos.</li>
+</ul>
+</div>
+
+<h2>1.2 · Hotmart: comisión por último clic y cookie eterno</h2>
+<div class="card">
+<p><b>Qué es Hotmart:</b> un mercado de afiliación donde puedes comercializar productos digitales creados por terceros a cambio de una comisión por cada venta.</p>
+<p>Para garantizar que la atribución de ingresos sea correcta, el sistema usa dos reglas operativas fundamentales:</p>
+<div class="tw"><table class="tbl">
+<thead><tr><th>Regla</th><th>Qué significa</th><th>Consecuencia práctica</th></tr></thead>
+<tbody>
+<tr><td>Comisión por Último Clic</td><td>Asigna la totalidad de la comisión al afiliado cuyo enlace de divulgación (hotlink) fue el <b>último</b> en registrar un clic antes del pago.</td><td>Si tu enlace es el último que toca el comprador, cobras tú. Por eso conviene tener el enlace presente en la página réplica, en los correos y en WhatsApp.</td></tr>
+<tr><td>Cookie Eterno</td><td>El código de seguimiento del afiliado queda guardado de forma <b>indefinida</b> en el navegador del usuario.</td><td>Si la persona compra semanas después, la comisión sigue siendo tuya. No hay caducidad que respetar.</td></tr>
+</tbody></table></div>
+<div class="note"><p style="margin:0"><b>Idea clave:</b> estos dos mecanismos son la razón por la que el sistema funciona. Todo el esfuerzo de nutrición (correos, WhatsApp, contenido) apunta a que tu enlace sea el último clic.</p></div>
+</div>
+
+<h2>1.3 · Cómo elegir el producto digital ganador</h2>
+<div class="card">
+<p>No cualquier producto sirve. Antes de afiliarte, valida estos cuatro criterios:</p>
+<ol>
+<li><b>Página de ventas optimizada.</b> Debe tener mocaps atractivos, testimonios, estructura persuasiva y llamados a la acción claros. Si el productor no cuidó su página, tu página réplica tampoco podrá brillar.</li>
+<li><b>Porcentaje de comisión de al menos el 50%</b> sobre el valor total del producto.</li>
+<li><b>Demanda validada en buscadores.</b> Usa herramientas de análisis de palabras clave como VidIQ o Google Keyword Planner y comprueba que existan entre <b>3.000 y más de 50.000 búsquedas mensuales</b> asociadas al curso o temática.</li>
+<li><b>Coherencia con el Lead Magnet.</b> El recurso gratuito debe complementar exactamente el producto de pago.</li>
+</ol>
+<div class="note ok"><p style="margin:0"><b>Ejemplo real del tutorial:</b> el término <code>curso CapCut</code> cuenta con un volumen validado de <b>53.000 búsquedas mensuales</b>. Ese dato justifica elegir el curso «Edición Dinámica en CapCut» como producto de afiliación.</p></div>
+</div>
+
+<h2>1.4 · El Lead Magnet: la carnada que lo inicia todo</h2>
+<div class="card">
+<p><b>Qué es:</b> un recurso gratuito de entrega inmediata que se ofrece a la audiencia a cambio de su dirección de correo electrónico.</p>
+<p><b>Para qué sirve:</b> para transformar un visitante anónimo en un prospecto identificable al que puedes volver a contactar.</p>
+<p><b>Por qué importa:</b> sin Lead Magnet no hay captación. Es la puerta de entrada del embudo.</p>
+<p><b>Regla de oro:</b> debe estar estrictamente complementado con el producto de pago. Si regalas algo que no tiene relación, atraerás curiosos que nunca comprarán.</p>
+<div class="note"><p style="margin:0"><b>Ejemplo práctico:</b> si el producto a vender es el curso «Edición Dinámica en CapCut», el recurso gratuito ideal es un <b>Pack de Subtítulos Virales Predeterminados para CapCut</b>. Atrae exactamente al tipo de usuario interesado en mejorar la edición de sus vídeos.</p></div>
+</div>
+
+<h2>1.5 · Configuración de las cuentas base</h2>
+<div class="card">
+<p>Antes de comenzar la construcción del embudo, crea estas tres cuentas gratuitas:</p>
+<div class="step"><div class="n">1</div><div class="b"><p><b>Hotmart.</b> Accede a <code>hotmart.com</code>, regístrate y dirígete al <b>Mercado de Afiliación</b> para afiliarte al producto elegido.</p><p><span class="pill ok">Resultado</span> Tendrás acceso a tus hotlinks y a la página de pago personalizada.</p></div></div>
+<div class="step"><div class="n">2</div><div class="b"><p><b>Systeme.io.</b> Regístrate en <code>systeme.io</code> con una cuenta gratuita de por vida.</p><p><span class="pill ok">Resultado</span> Panel con túneles de venta, formularios, CRM, etiquetas y flujos de trabajo.</p></div></div>
+<div class="step"><div class="n">3</div><div class="b"><p><b>ChatGPT (OpenAI).</b> Actuará como diseñador y programador web mediante generación de código HTML/CSS.</p><p><span class="pill ok">Resultado</span> Un asistente que convierte tus instrucciones en páginas listas para pegar.</p></div></div>
+</div>
+
+<h2>1.6 · Cómo funciona el embudo completo</h2>
+<div class="flow">
+<div class="f"><div class="fi">1</div><div class="ft"><b>Reel con palabra clave</b><span>El usuario comenta «PACK» en Instagram.</span></div></div>
+<div class="f"><div class="fi">2</div><div class="ft"><b>ManyChat responde por DM</b><span>Envía el enlace a la página de captura.</span></div></div>
+<div class="f"><div class="fi">3</div><div class="ft"><b>Página de captura (Systeme.io)</b><span>El visitante pulsa el botón y se abre el pop-up del formulario.</span></div></div>
+<div class="f"><div class="fi">4</div><div class="ft"><b>Etiqueta en el CRM</b><span>Se asigna <code>acceso al pack subtitulos capcut</code> y se activa el flujo.</span></div></div>
+<div class="f"><div class="fi">5</div><div class="ft"><b>Página réplica con oferta</b><span>Redirección inmediata a la oferta + banner hacia WhatsApp.</span></div></div>
+<div class="f"><div class="fi">6</div><div class="ft"><b>Correo de entrega (10 min)</b><span>Recibe el pack y un recordatorio de la oferta.</span></div></div>
+<div class="f"><div class="fi">7</div><div class="ft"><b>Secuencia de venta</b><span>Día 1 y día 2: beneficios, objeciones, urgencia.</span></div></div>
+<div class="f"><div class="fi">8</div><div class="ft"><b>Comisión en Hotmart</b><span>Último clic + cookie eterno aseguran la atribución.</span></div></div>
+</div>
+
+<div class="panel-nav"><button class="btn ghost" type="button" data-goto="0">← INICIO</button><span class="pn-i">2 / 10</span><button class="btn ghost" type="button" data-goto="2">PROCEDIMIENTO →</button></div>
+</section>
+
+<!-- ==================== PROCEDIMIENTO ==================== -->
+<section class="tab-panel" id="p-procedimiento" data-t="PROCEDIMIENTO: Construcción del Embudo Paso a Paso" data-short="PROCEDIMIENTO" role="tabpanel" aria-label="Procedimiento">
+<h1>Construcción del embudo paso a paso</h1>
+<p class="lead">Seis niveles, en orden. Cada paso indica qué haces, por qué lo haces y qué deberías ver al terminar. No avances al siguiente nivel hasta haber verificado el resultado del anterior.</p>
+
+<h2>Nivel 1 · Atracción de tráfico y captación automatizada</h2>
+<h3>2.1 · La estrategia de contenido «Comenta YO QUIERO»</h3>
+<div class="card">
+<p><b>Qué es:</b> publicar contenido (Reels, carruseles, publicaciones estáticas o anuncios) con una llamada a la acción explícita: se le pide al usuario que comente una palabra clave concreta —por ejemplo «QUIERO» o «PACK»— para recibir el enlace al recurso.</p>
+<p><b>Por qué funciona:</b> los comentarios aumentan el alcance orgánico de la publicación y, al mismo tiempo, identifican a los interesados reales.</p>
+<div class="note"><p style="margin:0"><b>Ejemplo de pieza:</b> Reel mostrando el antes y el después de un vídeo con subtítulos automáticos. Texto en pantalla: «Comenta <b>PACK</b> y te envío mis subtítulos virales gratis».</p></div>
+</div>
+
+<h3>2.2 · Automatización de respuestas en Instagram con ManyChat</h3>
+<div class="card">
+<p><b>Objetivo:</b> procesar cientos o miles de comentarios sin intervención manual.</p>
+<div class="step"><div class="n">1</div><div class="b"><p>Conecta tu cuenta <b>profesional</b> de Instagram a ManyChat.</p><p><span class="pill ok">Resultado</span> ManyChat ve tus publicaciones y puede responder a los comentarios.</p></div></div>
+<div class="step"><div class="n">2</div><div class="b"><p>Crea una automatización de tipo <b>Instagram Comment Growth Tool</b> (o <em>Triggers de Comentarios</em>).</p><p><span class="pill">Motivo</span> Este tipo de automatización escucha los comentarios de una publicación concreta.</p></div></div>
+<div class="step"><div class="n">3</div><div class="b"><p>Configura la <b>palabra clave desencadenante</b>: <code>QUIERO</code> o <code>PACK</code>.</p><p><span class="pill warn">Atención</span> Usa una sola palabra, sin tildes y en mayúsculas, para reducir fallos de coincidencia.</p></div></div>
+</div>
+
+<h3>2.3 · Mensaje privado y enlace de redirección</h3>
+<div class="card">
+<p>Cuando el usuario comenta la palabra clave, ManyChat envía de inmediato un mensaje directo que contiene:</p>
+<ul><li>Un saludo personalizado.</li><li>Un botón con el enlace directo a la <b>Página de Captura</b> construida en Systeme.io.</li></ul>
+<div class="note ok"><p style="margin:0"><b>Resultado esperado:</b> comentas «PACK» con una cuenta de prueba en tu propio Reel y, en segundos, recibes el DM con el botón.</p></div>
+<div class="note warn"><p style="margin:0"><b>Problema frecuente:</b> si el DM no llega, revisa que la publicación esté seleccionada en la automatización y que la cuenta de Instagram sea profesional. Instagram limita la mensajería fuera de la ventana de 24 horas.</p></div>
+</div>
+
+<h2>Nivel 2 · Página de captura con ChatGPT y Systeme.io</h2>
+<h3>3.1 · Qué incluye el plan gratuito de Systeme.io</h3>
+<div class="card">
+<div class="tw"><table class="tbl">
+<thead><tr><th>Límite del plan gratuito</th><th>Cantidad</th><th>Consecuencia</th></tr></thead>
+<tbody>
+<tr><td>Contactos registrados</td><td>2.000</td><td>Suficiente para validar el embudo completo.</td></tr>
+<tr><td>Etiquetas (Tags)</td><td>1</td><td>Debes usar la etiqueta con criterio: una sola para todo el embudo.</td></tr>
+<tr><td>Correos electrónicos</td><td>Ilimitados</td><td>La secuencia de venta no tiene coste.</td></tr>
+<tr><td>Etapas del túnel</td><td>15</td><td>Permite página de captura, formulario, página réplica y gracias.</td></tr>
+</tbody></table></div>
+<div class="note warn"><p style="margin:0"><b>Advertencia de diseño:</b> con una sola etiqueta disponible, no intentes segmentar varios recursos a la vez. Un embudo = una etiqueta.</p></div>
+</div>
+
+<h3>3.2 · Crear el túnel de venta</h3>
+<div class="card">
+<div class="step"><div class="n">1</div><div class="b"><p>En el panel de Systeme.io, ve a <b>Túneles de venta</b> (o <em>Sitios túneles</em>).</p></div></div>
+<div class="step"><div class="n">2</div><div class="b"><p>Pulsa <b>Crear un nuevo túnel</b>.</p></div></div>
+<div class="step"><div class="n">3</div><div class="b"><p>Nombre del embudo: <code>Embudo Curso Edición Dinámica</code>.</p></div></div>
+<div class="step"><div class="n">4</div><div class="b"><p>Selecciona el <b>dominio predeterminado</b> de la cuenta.</p></div></div>
+<div class="step"><div class="n">5</div><div class="b"><p>Tipo de túnel: <b>Personalizado</b>.</p><p><span class="pill">Motivo</span> El tipo personalizado te deja decidir cada etapa manualmente, sin plantillas predefinidas.</p></div></div>
+<div class="step"><div class="n">6</div><div class="b"><p>Moneda: <b>Dólar estadounidense (USD)</b> o <b>Euro (EUR)</b>.</p></div></div>
+<div class="step"><div class="n">7</div><div class="b"><p>Pulsa <b>Guardar</b>.</p><p><span class="pill ok">Resultado</span> Aparece un túnel vacío listo para añadir etapas.</p></div></div>
+</div>
+
+<h3>3.3 · Crear la etapa «Página de regalo»</h3>
+<div class="card">
+<div class="step"><div class="n">1</div><div class="b"><p>Dentro del túnel, pulsa <b>Agregar una nueva etapa</b>.</p></div></div>
+<div class="step"><div class="n">2</div><div class="b"><p>Nombre de la etapa: <code>Página de regalo - Pack de Subtítulos Virales</code>.</p></div></div>
+<div class="step"><div class="n">3</div><div class="b"><p>Tipo de etapa: <b>Página de registro</b> (o <em>Página de captura</em>).</p></div></div>
+<div class="step"><div class="n">4</div><div class="b"><p>Plantilla: <b>Empezar desde cero</b>.</p></div></div>
+<div class="step"><div class="n">5</div><div class="b"><p>Configura la ruta URL (slug), usando guiones en lugar de espacios. Por ejemplo: <code>pack-subtitulos-virales</code>.</p></div></div>
+<div class="step"><div class="n">6</div><div class="b"><p>Pulsa <b>Guardar</b>.</p><p><span class="pill ok">Resultado</span> Tienes una página en blanco con su propia URL.</p></div></div>
+</div>
+
+<h3>3.4 · El prompt para generar la página con ChatGPT</h3>
+<div class="card">
+<p><b>Objetivo:</b> obtener todo el HTML y CSS de una página de captura profesional en un solo bloque, sin escribir una línea de código.</p>
+<div class="codebox"><button class="copy" type="button">COPIAR</button><pre>Necesito crear una página de captura profesional y moderna para entregar un recurso gratuito llamado "Pack de Subtítulos Virales para CapCut". La página debe tener colores atractivos, incluir un espacio para el mockup del pack y ser compatible con Systeme.io. Entrégame todo el código HTML y CSS completo en un solo bloque para copiarlo directamente dentro del editor de Systeme.io. Incluye botones de llamado a la acción llamativos que abran un popup posterior.</pre></div>
+<div class="note"><p style="margin:0"><b>Por qué el prompt funciona:</b> especifica el recurso, el sector (CapCut), la herramienta de destino (Systeme.io), el formato de salida (un solo bloque) y el comportamiento futuro (botones que abrirán un pop-up). Cuanta más información das de una vez, menos iteraciones necesitas.</p></div>
+</div>
+
+<h3>3.5 · Insertar el código en Systeme.io</h3>
+<div class="card">
+<div class="step"><div class="n">1</div><div class="b"><p>En Systeme.io, pulsa <b>Editar página</b> en la etapa correspondiente.</p></div></div>
+<div class="step"><div class="n">2</div><div class="b"><p>En el panel de elementos de la izquierda, arrastra el elemento <b>Código HTML</b> al lienzo de trabajo.</p></div></div>
+<div class="step"><div class="n">3</div><div class="b"><p>Haz clic sobre el bloque HTML insertado y pulsa <b>Editar el código</b>.</p></div></div>
+<div class="step"><div class="n">4</div><div class="b"><p>Borra cualquier código por defecto, pega el código generado por ChatGPT y pulsa <b>Guardar</b>.</p><p><span class="pill ok">Resultado</span> La página muestra el diseño completo con el mockup y los botones.</p></div></div>
+</div>
+
+<h3>3.6 · Resolver el error «El código no es válido»</h3>
+<div class="card">
+<p><b>Causa habitual:</b> se descargaron archivos adjuntos o se copiaron caracteres de formato erróneos desde el bloc de notas.</p>
+<p><b>Solución:</b> indica inmediatamente a ChatGPT:</p>
+<div class="codebox"><button class="copy" type="button">COPIAR</button><pre>El código generado arrojó error de código no válido al pegarlo en Systeme.io. Entrega el código HTML directamente formateado dentro del chat para copiar y pegar directamente sin archivos de texto intermediarios.</pre></div>
+<p>Después, copia el nuevo código directamente de la ventana del chat y vuelve a insertarlo en el editor.</p>
+<div class="note warn"><p style="margin:0"><b>Regla de oro:</b> nunca pases código por un bloc de notas ni por un archivo de texto intermedio. Copia siempre del chat al editor.</p></div>
+</div>
+
+<h3>3.7 · Eliminar márgenes blancos: versión escritorio y móvil</h3>
+<div class="card">
+<p><b>Problema:</b> alrededor del bloque HTML aparece una franja blanca que rompe el diseño a pantalla completa.</p>
+<div class="step"><div class="n">1</div><div class="b"><p>Selecciona el bloque de <b>Código HTML</b> en la configuración de la página.</p></div></div>
+<div class="step"><div class="n">2</div><div class="b"><p>Ve al panel lateral de <b>Tamaño y posición</b> (Márgenes / Padding).</p></div></div>
+<div class="step"><div class="n">3</div><div class="b"><p>En la versión de <b>escritorio</b>, ajusta los márgenes superior e inferior a valores negativos: aproximadamente <code>-50px</code>, con márgenes laterales también negativos.</p></div></div>
+<div class="step"><div class="n">4</div><div class="b"><p>Cambia al modo <b>Versión móvil</b> (icono de celular en el menú inferior).</p></div></div>
+<div class="step"><div class="n">5</div><div class="b"><p>Ajusta los márgenes móviles entre <code>-10px</code> y <code>-6px</code> hasta que el bloque llegue al borde de la pantalla.</p></div></div>
+<div class="step"><div class="n">6</div><div class="b"><p>Pulsa <b>Guardar cambios</b> y verifica con la vista previa o la inspección del navegador.</p><p><span class="pill ok">Resultado</span> La página ocupa el ancho completo en escritorio y en móvil, sin franjas blancas.</p></div></div>
+<div class="note"><p style="margin:0"><b>Truco de verificación:</b> abre la vista previa en el móvil real, no solo en el simulador. Los navegadores móviles a veces aplican márgenes distintos.</p></div>
+</div>
+
+<h2>Nivel 3 · Pop-up, formulario y etiquetado en el CRM</h2>
+<h3>4.1 · Crear el formulario en línea</h3>
+<div class="card">
+<div class="step"><div class="n">1</div><div class="b"><p>En el túnel de ventas, pulsa <b>Agregar una nueva etapa</b>.</p></div></div>
+<div class="step"><div class="n">2</div><div class="b"><p>Nombre de la etapa: <code>Formulario Pack CapCut</code>.</p></div></div>
+<div class="step"><div class="n">3</div><div class="b"><p>Tipo de etapa: <b>Formulario en línea</b>.</p></div></div>
+<div class="step"><div class="n">4</div><div class="b"><p>Selecciona una plantilla simple (empezando desde cero o plantilla básica) y pulsa <b>Guardar</b>.</p></div></div>
+<div class="step"><div class="n">5</div><div class="b"><p>Entra en <b>Editar página</b> del formulario y verifica que el campo de texto esté configurado con el tipo de entrada <b>Correo electrónico</b>.</p><p><span class="pill warn">Importante</span> Si el campo no es de tipo email, Systeme.io no validará el formato y entrarán datos basura.</p></div></div>
+</div>
+
+<h3>4.2 · Generar el pop-up con ChatGPT</h3>
+<div class="card">
+<div class="step"><div class="n">1</div><div class="b"><p>En la configuración de la etapa del formulario, copia el enlace o el código del formulario en línea.</p></div></div>
+<div class="step"><div class="n">2</div><div class="b"><p>Regresa a ChatGPT y envía la instrucción de integración que encontrarás también en la pestaña PROMPTS.</p></div></div>
+<div class="codebox"><button class="copy" type="button">COPIAR</button><pre>Ahora necesito que integres el formulario que te envío a continuación dentro de la página de captura mediante un pop-up emergente. Cuando el usuario haga clic en los botones de llamado a la acción ('Quiero mi pack gratis'), debe abrirse la ventana emergente con el campo de correo electrónico y el botón de descarga. Entrégame el código HTML completo para pegarlo en Systeme.io. A continuación te paso el código del formulario: [PEGAR CÓDIGO DEL FORMULARIO DE SYSTEME.IO].</pre></div>
+</div>
+
+<h3>4.3 · Vincular el pop-up a los botones CTA</h3>
+<div class="card">
+<div class="step"><div class="n">1</div><div class="b"><p>Copia el nuevo código HTML integrado por ChatGPT.</p></div></div>
+<div class="step"><div class="n">2</div><div class="b"><p>Vuelve a la etapa <b>Página de regalo</b>, pulsa <b>Editar página</b> y reemplaza el código HTML anterior por el nuevo.</p></div></div>
+<div class="step"><div class="n">3</div><div class="b"><p>Guarda los cambios y abre la <b>Vista previa</b>.</p></div></div>
+<div class="step"><div class="n">4</div><div class="b"><p>Verifica que al pulsar <b>«Quiero acceder a mi pack»</b> se abre la ventana flotante solicitando el correo.</p><p><span class="pill ok">Resultado</span> Pop-up funcional sobre la página de captura.</p></div></div>
+</div>
+
+<h3>4.4 · Crear y asignar la etiqueta en el CRM</h3>
+<div class="card">
+<p><b>Por qué:</b> el etiquetado identifica exactamente qué recurso solicitó el usuario y activa las campañas de correo automáticas.</p>
+<div class="step"><div class="n">1</div><div class="b"><p>En el menú principal, ve a <b>Contactos → Etiquetas</b>.</p></div></div>
+<div class="step"><div class="n">2</div><div class="b"><p>Crea una nueva etiqueta: <code>acceso al pack subtitulos capcut</code>.</p></div></div>
+<div class="step"><div class="n">3</div><div class="b"><p>Regresa al túnel de ventas, selecciona la etapa del <b>Formulario</b> (o página de registro) y accede a la pestaña <b>Reglas de automatización</b>.</p></div></div>
+<div class="step"><div class="n">4</div><div class="b"><p>Agrega una regla con el evento <em>Ocurre un registro en la etapa del túnel</em>.</p></div></div>
+<div class="step"><div class="n">5</div><div class="b"><p>Acción a ejecutar: <b>Asignar una etiqueta</b> → selecciona <code>acceso al pack subtitulos capcut</code>.</p></div></div>
+<div class="step"><div class="n">6</div><div class="b"><p>Pulsa <b>Guardar regla</b>.</p><p><span class="pill ok">Resultado</span> Cada nuevo registro queda etiquetado automáticamente.</p></div></div>
+</div>
+
+<h3>4.5 · Configurar la redirección tras el registro</h3>
+<div class="card">
+<div class="step"><div class="n">1</div><div class="b"><p>En la misma configuración del formulario, ve a <b>Acción al hacer clic en el botón de envío</b>.</p></div></div>
+<div class="step"><div class="n">2</div><div class="b"><p>Selecciona <b>Enviar formulario</b>.</p></div></div>
+<div class="step"><div class="n">3</div><div class="b"><p>En «¿Desea redirigir a los usuarios después del registro?» elige <b>Hacia una URL personalizada</b>.</p></div></div>
+<div class="step"><div class="n">4</div><div class="b"><p>Pega el enlace de la <b>Página de Gracias con Oferta Inmediata</b> (la página réplica del Nivel 4).</p><p><span class="pill ok">Resultado</span> El usuario aterriza en la oferta justo después de registrarse.</p></div></div>
+</div>
+
+<h2>Nivel 4 · Página réplica con oferta inmediata y comunidad de WhatsApp</h2>
+<h3>5.1 · Por qué no usar una página de gracias tradicional</h3>
+<div class="card">
+<p>Una página que solo muestra «Gracias por registrarte, revisa tu correo» desperdicia el mayor momento de atención del prospecto.</p>
+<p>En su lugar, el sistema usa una <b>página de ventas réplica con oferta inmediata</b>: recrea la estructura exacta, testimonios, imágenes y mocaps de la página oficial del productor, añade un banner de notificación en la parte superior y reemplaza los botones de compra por tu checkout de afiliado.</p>
+<div class="note warn"><p style="margin:0"><b>Advertencia legal y ética:</b> recrear la página de un productor para insertar tu enlace de afiliado es una práctica de marketing de afiliación. Debes respetar las condiciones del programa de afiliados de Hotmart y del productor, no suplantar la identidad del productor y no falsear testimonios. Si el productor prohíbe la réplica, no la hagas.</p></div>
+</div>
+
+<h3>5.2 · Extraer el enlace de referencia y el checkout del afiliado</h3>
+<div class="card">
+<div class="step"><div class="n">1</div><div class="b"><p>En Hotmart, ve a <b>Productos → Soy Afiliado</b> y selecciona el producto.</p></div></div>
+<div class="step"><div class="n">2</div><div class="b"><p>Entra en los <b>Links de divulgación (Hotlinks)</b>.</p></div></div>
+<div class="step"><div class="n">3</div><div class="b"><p>Copia la URL de la <b>Página de ventas oficial</b> para entregarla a ChatGPT como referencia estructural.</p></div></div>
+<div class="step"><div class="n">4</div><div class="b"><p>Copia el enlace de la <b>Página de pago personalizada</b> (checkout directo).</p></div></div>
+</div>
+
+<h3>5.3 · Verificar el código de referencia (cookie eterno)</h3>
+<div class="card">
+<p><b>Objetivo:</b> asegurarte de que las comisiones se acreditan correctamente.</p>
+<div class="step"><div class="n">1</div><div class="b"><p>Abre el enlace del checkout en una ventana de <b>incógnito</b>.</p></div></div>
+<div class="step"><div class="n">2</div><div class="b"><p>En la parte inferior del formulario de pago, ubica la sección <b>Ref:</b>.</p></div></div>
+<div class="step"><div class="n">3</div><div class="b"><p>Comprueba que el código alfanumérico coincide exactamente con tu referencia de afiliado (en el ejemplo del tutorial, un código terminado en <code>69H</code>).</p><p><span class="pill ok">Resultado</span> Ese código es el que garantiza la atribución por último clic y cookie eterno.</p></div></div>
+<div class="note err"><p style="margin:0"><b>Si el código no aparece o no coincide:</b> no publiques la página. Vuelve a copiar el hotlink desde Hotmart. Un enlace mal copiado hace que todo el embudo trabaje gratis para otro afiliado.</p></div>
+</div>
+
+<h3>5.4 · Generar la página réplica con el banner animado</h3>
+<div class="card">
+<p>El banner superior es el encargado de retener al usuario y llevarlo a WhatsApp. Prompt para ChatGPT:</p>
+<div class="codebox"><button class="copy" type="button">COPIAR</button><pre>Necesito recrear la página de ventas del producto digital cuyo link te proporciono. Recrea el diseño, estructura, mocaps y elementos con HTML/CSS profesional para Systeme.io. Reemplaza todos los botones de compra por mi link de checkout personalizado: [PEGAR LINK DE CHECKOUT CON REF DE AFILIADO]. Además, añade un banner superior destacado en movimiento, con fondo rojo y fuente blanca visible que diga: '¡Tu recurso gratuito ya fue enviado a tu correo electrónico! Pero si quieres acceder de manera inmediata, únete a nuestra comunidad VIP de WhatsApp haciendo clic aquí'.</pre></div>
+</div>
+
+<h3>5.5 · Integrar la comunidad de WhatsApp</h3>
+<div class="card">
+<div class="step"><div class="n">1</div><div class="b"><p>Crea un grupo o canal de WhatsApp dedicado a la temática (por ejemplo, <em>Comunidad de Creadores y Edición CapCut</em>).</p></div></div>
+<div class="step"><div class="n">2</div><div class="b"><p>Obtén el enlace de invitación al grupo.</p></div></div>
+<div class="step"><div class="n">3</div><div class="b"><p>Colócalo dentro del botón del banner superior en el código de la página réplica.</p><p><span class="pill ok">Resultado</span> El usuario recién captado tiene dos rutas de contacto: el correo automatizado y la comunidad de WhatsApp.</p></div></div>
+</div>
+
+<h2>Nivel 5 · Email marketing automatizado y nutrición</h2>
+<h3>6.1 · Verificar el dominio remitente</h3>
+<div class="card">
+<p><b>Por qué:</b> para que los correos lleguen a la bandeja de entrada y no a SPAM o promociones.</p>
+<div class="step"><div class="n">1</div><div class="b"><p>Ve a <b>Configuración → Correos electrónicos</b> en Systeme.io.</p></div></div>
+<div class="step"><div class="n">2</div><div class="b"><p>Agrega el nombre de tu dominio propio y configura los registros <b>CNAME/DNS</b> indicados en tu proveedor de dominio.</p><p><span class="pill ok">Resultado</span> Remitente autenticado y mejor reputación de entrega.</p></div></div>
+<div class="note warn"><p style="margin:0"><b>Sin dominio propio</b> los correos salen igualmente, pero con mucha más probabilidad de caer en promociones. Si estás empezando y no tienes dominio, continúa: el sistema funciona, solo entrega peor.</p></div>
+</div>
+
+<h3>6.2 · Crear el flujo de trabajo activado por etiqueta</h3>
+<div class="card">
+<div class="step"><div class="n">1</div><div class="b"><p>En el menú superior, entra en <b>Automatizaciones → Flujos de trabajo</b> (<em>Workflows</em>).</p></div></div>
+<div class="step"><div class="n">2</div><div class="b"><p>Crea un flujo nuevo y llámalo <code>Secuencia de Entrega y Ventas - CapCut</code>.</p></div></div>
+<div class="step"><div class="n">3</div><div class="b"><p>Pulsa <b>Agregar un primer desencadenante</b> → <b>Etiqueta añadida</b>.</p></div></div>
+<div class="step"><div class="n">4</div><div class="b"><p>Selecciona la etiqueta <code>acceso al pack subtitulos capcut</code>.</p></div></div>
+</div>
+
+<h3>6.3 · Tiempo de espera y entrega del recurso</h3>
+<div class="card">
+<div class="step"><div class="n">1</div><div class="b"><p>Añade una acción de decisión <b>Esperar</b> con duración de <b>10 minutos</b>.</p><p><span class="pill">Motivo</span> Ese margen permite que el usuario navegue primero por la página de ventas réplica tras registrarse.</p></div></div>
+<div class="step"><div class="n">2</div><div class="b"><p>Añade la acción <b>Enviar correo electrónico</b>.</p></div></div>
+<div class="step"><div class="n">3</div><div class="b"><p><b>Asunto:</b> <code>[DESCARGA] Aquí tienes tu Pack de Subtítulos Virales para CapCut</code>.</p></div></div>
+<div class="step"><div class="n">4</div><div class="b"><p><b>Cuerpo:</b> incluye el enlace directo de descarga del pack y una llamada a la acción recordando la oferta especial del curso completo, con un botón hacia la página réplica.</p></div></div>
+</div>
+
+<h3>6.4 · Secuencia de correos de venta</h3>
+<div class="card">
+<p>Las ventas de productos digitales raramente ocurren en el primer contacto. Estructura estos correos:</p>
+<div class="tw"><table class="tbl">
+<thead><tr><th>Correo</th><th>Momento</th><th>Asunto</th><th>Contenido</th></tr></thead>
+<tbody>
+<tr><td>Correo 1</td><td>10 minutos</td><td><code>[DESCARGA] Aquí tienes tu Pack…</code></td><td>Entrega del recurso + recordatorio de la oferta.</td></tr>
+<tr><td>Correo 2</td><td>1 día después</td><td><code>Cómo editar vídeos en la mitad de tiempo con este método</code></td><td>Beneficios principales del curso, resolución de objeciones y enlace a la página de ventas.</td></tr>
+<tr><td>Correo 3</td><td>2 días después</td><td><code>Últimos cupos con el 50% de descuento disponible</code></td><td>Escasez, garantía de devolución de Hotmart y llamado de urgencia al checkout.</td></tr>
+</tbody></table></div>
+<p><b>Cómo se programa:</b> después del correo 1, añade <b>Esperar 1 día</b> → correo 2 → <b>Esperar 1 día adicional</b> → correo 3.</p>
+</div>
+
+<h3>6.5 · La regla de los 3 a 7 impactos</h3>
+<div class="card">
+<p>Una conversión o venta promedio se concreta únicamente después de que el prospecto ha recibido entre <b>3 y 7 impactos de contacto</b> con la oferta.</p>
+<p>El sistema garantiza esos impactos combinando:</p>
+<ol>
+<li><b>Primer contacto:</b> página de captura y presentación de la página réplica.</li>
+<li><b>Segundo contacto:</b> primer correo de entrega del Lead Magnet (10 minutos).</li>
+<li><b>Tercer contacto:</b> unirse e interactuar en la comunidad de WhatsApp.</li>
+<li><b>Cuarto al séptimo:</b> correos de la secuencia automatizada y aportes de valor o promociones en el grupo de WhatsApp.</li>
+</ol>
+</div>
+
+<h2>Nivel 6 · Métricas, proyecciones y escalabilidad</h2>
+<h3>7.1 · Analizar estadísticas y verificar leads</h3>
+<div class="card">
+<div class="step"><div class="n">1</div><div class="b"><p>Entra en <b>Contactos</b> y filtra por la etiqueta <code>acceso al pack subtitulos capcut</code>.</p></div></div>
+<div class="step"><div class="n">2</div><div class="b"><p>Comprueba que la dirección del lead aparece registrada con su fecha y su etiqueta activa.</p></div></div>
+<div class="step"><div class="n">3</div><div class="b"><p>Revisa las estadísticas de apertura y clics en <b>Túneles de venta → Estadísticas</b>.</p></div></div>
+</div>
+
+<h3>7.2 · Tasa de conversión esperada</h3>
+<div class="card"><p>En embudos de captación con entrega de recursos gratuitos y nutrición automatizada, la tasa de conversión promedio validada oscila entre el <b>1% y el 3%</b> del total de leads capturados.</p></div>
+
+<h3>7.3 · Proyección matemática de facturación</h3>
+<div class="card">
+<div class="tw"><table class="tbl">
+<thead><tr><th>Variable</th><th>Valor</th></tr></thead>
+<tbody>
+<tr><td>Leads capturados</td><td>1.200 personas</td></tr>
+<tr><td>Tasa de conversión estimada</td><td>3%</td></tr>
+<tr><td>Número de compradores</td><td>1.200 × 0,03 = <b>36 ventas</b></td></tr>
+<tr><td>Precio del producto digital</td><td>50 USD</td></tr>
+<tr><td>Comisión por venta (50%)</td><td>25 USD</td></tr>
+<tr><td><b>Facturación neta generada</b></td><td><b>36 × 25 = 900 USD</b> en 10–15 días</td></tr>
+</tbody></table></div>
+</div>
+
+<h3>7.4 · Del tráfico orgánico al tráfico pagado</h3>
+<div class="card">
+<p>Una vez validado el funcionamiento del embudo con contenido orgánico, el sistema se escala invirtiendo un presupuesto controlado (por ejemplo, 100 USD) en campañas de anuncios pagados en Meta Ads (Instagram/Facebook Ads). Esto automatiza la entrada masiva de leads hacia el embudo de captación.</p>
+<div class="note warn"><p style="margin:0"><b>No escales antes de validar.</b> Si tu embudo convierte mal en orgánico, la publicidad solo hará que pierdas dinero más rápido.</p></div>
+</div>
+
+<div class="panel-nav"><button class="btn ghost" type="button" data-goto="1">← CONCEPTOS</button><span class="pn-i">3 / 10</span><button class="btn ghost" type="button" data-goto="3">PRÁCTICA →</button></div>
+</section>
+
+<!-- ==================== PRÁCTICA ==================== -->
+<section class="tab-panel" id="p-practica" data-t="PRÁCTICA: Proyecto Integrador «Edición Dinámica en CapCut»" data-short="PRÁCTICA" role="tabpanel" aria-label="Práctica">
+<h1>Proyecto integrador: «Edición Dinámica en CapCut»</h1>
+<p class="lead">Aquí aplicas todo lo aprendido de principio a fin con un caso real. Al terminar las seis fases tendrás un embudo completo, funcional y verificado.</p>
+
+<div class="card accent">
+<h3 style="margin-top:0">Resumen del proyecto</h3>
+<ul style="margin-bottom:0">
+<li><b>Producto de afiliación:</b> curso «Edición Dinámica en CapCut» (50% de comisión).</li>
+<li><b>Nicho validado:</b> «curso CapCut» — 53.000 búsquedas mensuales.</li>
+<li><b>Lead Magnet:</b> Pack de Subtítulos Virales para CapCut.</li>
+<li><b>Etiqueta CRM:</b> <code>acceso al pack subtitulos capcut</code>.</li>
+<li><b>Referencia de afiliado verificada:</b> código terminado en <code>69H</code>.</li>
+</ul>
+</div>
+
+<h2>Fase 1 · Selección del producto y validación en Hotmart</h2>
+<div class="card">
+<ul>
+<li>Afiliación al curso «Edición Dinámica en CapCut» con 50% de comisión.</li>
+<li>Verificación del volumen de búsqueda de la palabra clave «curso CapCut»: 53.000 búsquedas/mes.</li>
+<li>Validación de la referencia de afiliado <code>69H</code> en el checkout.</li>
+</ul>
+<p><span class="pill ok">Entregable</span> Captura del checkout con la referencia visible.</p>
+</div>
+
+<h2>Fase 2 · Lead Magnet y redes sociales</h2>
+<div class="card">
+<ul>
+<li>Empaquetado del bono gratuito: Pack de Subtítulos Virales para CapCut.</li>
+<li>Publicación de un Reel mostrando el antes y después de usar subtítulos automáticos, con el CTA «Comenta PACK».</li>
+</ul>
+<p><span class="pill ok">Entregable</span> Reel publicado + subida de la automatización de ManyChat con la palabra clave.</p>
+</div>
+
+<h2>Fase 3 · Automatización de captación</h2>
+<div class="card">
+<ul><li>Conexión de ManyChat para enviar por DM la URL de la página de captura en Systeme.io.</li></ul>
+<p><span class="pill ok">Entregable</span> Prueba real: comentas «PACK» y recibes el DM con el enlace.</p>
+</div>
+
+<h2>Fase 4 · Despliegue del embudo en Systeme.io con ChatGPT</h2>
+<div class="card">
+<ul>
+<li>Generación del HTML de la página de captura mediante ChatGPT.</li>
+<li>Ajuste de márgenes responsivos (<code>-50px</code> en escritorio, <code>-10px</code> en móvil).</li>
+<li>Creación del pop-up e integración de la etiqueta <code>acceso al pack subtitulos capcut</code>.</li>
+</ul>
+<p><span class="pill ok">Entregable</span> Página publicada, pop-up funcional y contacto de prueba etiquetado en el CRM.</p>
+</div>
+
+<h2>Fase 5 · Página réplica y comunidad</h2>
+<div class="card">
+<ul>
+<li>Generación con ChatGPT de la página de ventas réplica, con banner animado hacia la comunidad de WhatsApp.</li>
+<li>Botones dirigidos al checkout propio con la referencia verificada.</li>
+</ul>
+<p><span class="pill ok">Entregable</span> Redirección tras el registro funcionando y banner abriendo el grupo de WhatsApp.</p>
+</div>
+
+<h2>Fase 6 · Nutrición y cierre de ventas</h2>
+<div class="card">
+<ul>
+<li>Activación del flujo automatizado de 3 correos en Systeme.io.</li>
+<li>Envío de tips de edición y cupones de descuento en el grupo de WhatsApp.</li>
+</ul>
+<p><span class="pill ok">Entregable</span> Los tres correos llegan en los tiempos previstos al contacto de prueba.</p>
+</div>
+
+<hr>
+<h2>Ejercicios con solución</h2>
+
+<details class="qa"><summary>Ejercicio 1 · ¿Qué Lead Magnet elegirías para un curso de fotografía con móvil?</summary><div class="ans"><p><b>Solución razonada:</b> un pack de presets o una guía de «10 ajustes manuales para fotos con móvil». Debe cumplir tres condiciones: entrega inmediata, valor percibido alto y relación directa con el producto de pago. Un pack de presets atrae exactamente a quien quiere mejorar sus fotos, que es quien comprará el curso.</p></div></details>
+
+<details class="qa"><summary>Ejercicio 2 · Tienes 400 leads y una conversión del 2%. ¿Cuántas ventas y cuánto facturas con un producto de 60 USD al 50%?</summary><div class="ans"><p><b>Solución:</b> 400 × 0,02 = <b>8 ventas</b>. Comisión por venta = 60 × 0,50 = <b>30 USD</b>. Facturación neta = 8 × 30 = <b>240 USD</b>.</p></div></details>
+
+<details class="qa"><summary>Ejercicio 3 · ¿Por qué el primer correo se envía a los 10 minutos y no inmediatamente?</summary><div class="ans"><p><b>Solución:</b> porque el usuario acaba de ser redirigido a la página réplica. Ese margen le permite ver la oferta con la atención fresca antes de que el correo compita por su atención. Enviarlo al instante fragmenta la experiencia y reduce la probabilidad de que lea la oferta.</p></div></details>
+
+<details class="qa"><summary>Ejercicio 4 · La página de captura se ve bien en escritorio pero deja una franja blanca en el móvil. ¿Qué haces?</summary><div class="ans"><p><b>Solución:</b> seleccionar el bloque de Código HTML en Systeme.io, cambiar a la vista móvil y ajustar los márgenes a valores negativos entre <code>-6px</code> y <code>-10px</code>. Guardar y verificar en un móvil real, no solo en el simulador.</p></div></details>
+
+<details class="qa"><summary>Ejercicio 5 · Un usuario comenta «pack» en minúsculas y ManyChat no responde. ¿Qué revisas?</summary><div class="ans"><p><b>Solución:</b> la coincidencia de la palabra clave. ManyChat debe estar configurado para aceptar la variante en minúsculas y sin tildes, o usar una expresión que contenga la palabra. Además, comprueba que la publicación esté dentro de la ventana de 24 horas y que la cuenta sea profesional.</p></div></details>
+
+<hr>
+<h2>Lista de comprobación del proyecto</h2>
+<p>Marca cada punto cuando lo hayas verificado de verdad. Tu progreso se guarda.</p>
+
+<label class="chk"><input type="checkbox" data-cid="c1"><span>Producto afiliado en Hotmart con comisión ≥ 50%.</span></label>
+<label class="chk"><input type="checkbox" data-cid="c2"><span>Nicho validado con al menos 3.000 búsquedas mensuales.</span></label>
+<label class="chk"><input type="checkbox" data-cid="c3"><span>Lead Magnet creado y listo para entregar.</span></label>
+<label class="chk"><input type="checkbox" data-cid="c4"><span>Cuentas de Hotmart, Systeme.io y ChatGPT operativas.</span></label>
+<label class="chk"><input type="checkbox" data-cid="c5"><span>Reel publicado con CTA «Comenta PACK».</span></label>
+<label class="chk"><input type="checkbox" data-cid="c6"><span>Automatización de ManyChat probada con un comentario real.</span></label>
+<label class="chk"><input type="checkbox" data-cid="c7"><span>Túnel de venta creado con moneda configurada.</span></label>
+<label class="chk"><input type="checkbox" data-cid="c8"><span>Página de regalo publicada y con márgenes corregidos en móvil.</span></label>
+<label class="chk"><input type="checkbox" data-cid="c9"><span>Pop-up abierto desde los botones CTA.</span></label>
+<label class="chk"><input type="checkbox" data-cid="c10"><span>Etiqueta creada y asignada automáticamente al registrarse.</span></label>
+<label class="chk"><input type="checkbox" data-cid="c11"><span>Redirección a la página réplica funcionando.</span></label>
+<label class="chk"><input type="checkbox" data-cid="c12"><span>Código de referencia verificado en el checkout en incógnito.</span></label>
+<label class="chk"><input type="checkbox" data-cid="c13"><span>Banner superior enlazando a la comunidad de WhatsApp.</span></label>
+<label class="chk"><input type="checkbox" data-cid="c14"><span>Dominio remitente verificado (o decisión consciente de no hacerlo aún).</span></label>
+<label class="chk"><input type="checkbox" data-cid="c15"><span>Flujo de trabajo activado por etiqueta con espera de 10 minutos.</span></label>
+<label class="chk"><input type="checkbox" data-cid="c16"><span>Los tres correos llegan en los tiempos previstos.</span></label>
+<label class="chk"><input type="checkbox" data-cid="c17"><span>Contacto de prueba visible en el CRM con su etiqueta.</span></label>
+<label class="chk"><input type="checkbox" data-cid="c18"><span>Estadísticas del túnel revisadas.</span></label>
+
+<div class="panel-nav"><button class="btn ghost" type="button" data-goto="2">← PROCEDIMIENTO</button><span class="pn-i">4 / 10</span><button class="btn ghost" type="button" data-goto="4">PROMPTS →</button></div>
+</section>
+
+<!-- ==================== PROMPTS ==================== -->
+<section class="tab-panel" id="p-prompts" data-t="PROMPTS: Biblioteca de Prompts Reutilizables" data-short="PROMPTS" role="tabpanel" aria-label="Prompts">
+<h1>Biblioteca de prompts</h1>
+<p class="lead">Todos los prompts del sistema, listos para copiar. Cada uno indica en qué nivel se usa y qué debes sustituir antes de enviarlo.</p>
+
+<div class="note"><p style="margin:0"><b>Cómo usarlos:</b> pulsa <b>COPIAR</b>, pega en ChatGPT y sustituye los fragmentos entre corchetes <code>[ASÍ]</code> por tus datos reales. No cambies el resto del texto: está redactado para obtener el formato exacto que Systeme.io acepta.</p></div>
+
+<h2>Prompt 1 · Página de captura completa</h2>
+<div class="card">
+<p><b>Dónde se emplea:</b> Nivel 2, paso 3.4 — generación del HTML de la página de regalo.</p>
+<p><b>Qué obtienes:</b> un bloque único de HTML + CSS con diseño moderno, espacio para el mockup y botones que abrirán el pop-up.</p>
+<p><b>Qué personalizar:</b> el nombre del recurso gratuito y la temática.</p>
+<div class="codebox"><button class="copy" type="button">COPIAR</button><pre>Necesito crear una página de captura profesional y moderna para entregar un recurso gratuito llamado "Pack de Subtítulos Virales para CapCut". La página debe tener colores atractivos, incluir un espacio para el mockup del pack y ser compatible con Systeme.io. Entrégame todo el código HTML y CSS completo en un solo bloque para copiarlo directamente dentro del editor de Systeme.io. Incluye botones de llamado a la acción llamativos que abran un popup posterior.</pre></div>
+</div>
+
+<h2>Prompt 2 · Corrección del error «código no válido»</h2>
+<div class="card">
+<p><b>Dónde se emplea:</b> Nivel 2, paso 3.6 — depuración al pegar el código en Systeme.io.</p>
+<p><b>Qué obtienes:</b> el mismo código, pero impreso directamente en el chat, sin archivos intermedios ni caracteres de formato corruptos.</p>
+<div class="codebox"><button class="copy" type="button">COPIAR</button><pre>El código generado arrojó error de código no válido al pegarlo en Systeme.io. Entrega el código HTML directamente formateado dentro del chat para copiar y pegar directamente sin archivos de texto intermediarios.</pre></div>
+<div class="note warn"><p style="margin:0"><b>Cuándo usarlo:</b> solo si aparece el error. Si el primer pegado funcionó, no necesitas este prompt.</p></div>
+</div>
+
+<h2>Prompt 3 · Integración del pop-up con el formulario</h2>
+<div class="card">
+<p><b>Dónde se emplea:</b> Nivel 3, paso 4.2 — vincular el formulario de Systeme.io a una ventana emergente.</p>
+<p><b>Qué obtienes:</b> el HTML completo de la página de captura con el formulario encapsulado en un modal que se abre al pulsar los botones.</p>
+<p><b>Qué personalizar:</b> pega al final el código del formulario copiado de Systeme.io y ajusta el texto del botón si lo cambiaste.</p>
+<div class="codebox"><button class="copy" type="button">COPIAR</button><pre>Ahora necesito que integres el formulario que te envío a continuación dentro de la página de captura mediante un pop-up emergente. Cuando el usuario haga clic en los botones de llamado a la acción ('Quiero mi pack gratis'), debe abrirse la ventana emergente con el campo de correo electrónico y el botón de descarga. Entrégame el código HTML completo para pegarlo en Systeme.io. A continuación te paso el código del formulario: [PEGAR CÓDIGO DEL FORMULARIO DE SYSTEME.IO].</pre></div>
+</div>
+
+<h2>Prompt 4 · Página réplica con banner animado</h2>
+<div class="card">
+<p><b>Dónde se emplea:</b> Nivel 4, paso 5.4 — creación de la página de gracias con oferta inmediata.</p>
+<p><b>Qué obtienes:</b> una recreación en HTML/CSS de la página del productor, con todos los botones apuntando a tu checkout y un banner rojo animado hacia WhatsApp.</p>
+<p><b>Qué personalizar:</b> el enlace de checkout con tu referencia de afiliado y, si quieres, el texto del banner.</p>
+<div class="codebox"><button class="copy" type="button">COPIAR</button><pre>Necesito recrear la página de ventas del producto digital cuyo link te proporciono. Recrea el diseño, estructura, mocaps y elementos con HTML/CSS profesional para Systeme.io. Reemplaza todos los botones de compra por mi link de checkout personalizado: [PEGAR LINK DE CHECKOUT CON REF DE AFILIADO]. Además, añade un banner superior destacado en movimiento, con fondo rojo y fuente blanca visible que diga: '¡Tu recurso gratuito ya fue enviado a tu correo electrónico! Pero si quieres acceder de manera inmediata, únete a nuestra comunidad VIP de WhatsApp haciendo clic aquí'.</pre></div>
+<div class="note"><p style="margin:0"><b>Nota:</b> para que ChatGPT pueda recrear la estructura, facilítale también la URL de la página de ventas oficial del productor como referencia visual.</p></div>
+</div>
+
+<h2>Prompt 5 · Reparar un pop-up que no se abre</h2>
+<div class="card">
+<p><b>Dónde se emplea:</b> pestaña ERRORES — cuando los botones CTA no disparan la ventana emergente.</p>
+<p><b>Qué obtienes:</b> el script corregido, con el identificador del formulario asociado explícitamente al evento <code>onClick</code> de cada botón.</p>
+<div class="codebox"><button class="copy" type="button">COPIAR</button><pre>El pop-up de mi página de captura no se abre al pulsar los botones de llamado a la acción. Necesito que revises el código y asocies explícitamente el id del formulario al evento onClick de todos los botones con la clase cta. Entrégame el código HTML completo corregido para pegarlo directamente en Systeme.io, sin archivos adjuntos.</pre></div>
+</div>
+
+<h2>Prompt 6 · Generar la secuencia de correos</h2>
+<div class="card">
+<p><b>Dónde se emplea:</b> Nivel 5, paso 6.4 — redacción de los correos de venta.</p>
+<p><b>Qué obtienes:</b> los tres correos redactados (entrega, beneficios, urgencia) con asunto y cuerpo listos para pegar en Systeme.io.</p>
+<p><b>Qué personalizar:</b> el nombre del recurso, el producto y el enlace del checkout.</p>
+<div class="codebox"><button class="copy" type="button">COPIAR</button><pre>Escribe una secuencia de 3 correos electrónicos para un embudo de afiliación en Hotmart. Producto: curso "Edición Dinámica en CapCut". Recurso gratuito entregado: "Pack de Subtítulos Virales para CapCut". Enlace de compra: [PEGAR LINK DE CHECKOUT CON REF]. Correo 1 (10 minutos después del registro): entregar el recurso y recordar la oferta. Correo 2 (1 día después): beneficios del curso y resolución de objeciones. Correo 3 (2 días después): urgencia, garantía de Hotmart y llamado al checkout. Devuelve cada correo con asunto y cuerpo, en tono cercano y profesional, sin promesas exageradas ni testimonios inventados.</pre></div>
+</div>
+
+<div class="panel-nav"><button class="btn ghost" type="button" data-goto="3">← PRÁCTICA</button><span class="pn-i">5 / 10</span><button class="btn ghost" type="button" data-goto="5">33 Preguntas (Q&A) →</button></div>
+</section>
+
+<!-- ==================== 33 PREGUNTAS (Q&A) ==================== -->
+<section class="tab-panel" id="p-qa" data-t="33 Preguntas (Q&A)" data-short="33 Preguntas (Q&A)" role="tabpanel" aria-label="33 Preguntas y respuestas">
+<h1>33 Preguntas y respuestas</h1>
+<p class="lead">Todas las dudas del sistema resueltas por nivel de dificultad. Pulsa cada pregunta para desplegar la respuesta.</p>
+
+<h2>Nivel Básico (1–11)</h2>
+
+<details class="qa"><summary>Q1 · ¿Qué es Hotmart y cómo se gana dinero en la plataforma?</summary><div class="ans"><p>Hotmart es una plataforma de productos digitales donde puedes ganar dinero de dos formas: creando tus propios productos (como infoproductor) o comercializando productos de terceros a cambio de comisiones por cada venta realizada como afiliado.</p></div></details>
+
+<details class="qa"><summary>Q2 · ¿Es necesario pagar mensualidades en Systeme.io para aplicar este embudo?</summary><div class="ans"><p>No. Systeme.io cuenta con un plan gratuito permanente que incluye hasta 2.000 contactos, envíos de correo ilimitados, 1 etiqueta CRM y hasta 15 etapas de túneles, lo cual es suficiente para operar todo el embudo.</p></div></details>
+
+<details class="qa"><summary>Q3 · ¿Qué es la regla de comisión por último clic en Hotmart?</summary><div class="ans"><p>Es la regla que garantiza que el afiliado cuyo enlace de divulgación recibió el último clic antes de que el comprador realizara el pago sea quien reciba la totalidad de la comisión asignada.</p></div></details>
+
+<details class="qa"><summary>Q4 · ¿En qué consiste la tecnología de Cookie Eterno?</summary><div class="ans"><p>Es un mecanismo de rastreo que guarda la referencia del afiliado en el navegador del comprador sin fecha de expiración. Si la persona compra tiempo después, la comisión sigue estando asegurada para el afiliado.</p></div></details>
+
+<details class="qa"><summary>Q5 · ¿Qué es un Lead Magnet y por qué es imprescindible en el embudo?</summary><div class="ans"><p>Es un recurso gratuito de alto valor (como un pack de plantillas o subtítulos) que se entrega a cambio del correo del usuario. Sirve como incentivo directo para transformar visitantes anónimos en prospectos (leads).</p></div></details>
+
+<details class="qa"><summary>Q6 · ¿Se necesitan conocimientos de programación o diseño web para usar ChatGPT en este sistema?</summary><div class="ans"><p>No. ChatGPT actúa como programador y diseñador. Solo debes dictarle instrucciones específicas (prompts) para que genere el código HTML completo que luego se pega directamente en Systeme.io.</p></div></details>
+
+<details class="qa"><summary>Q7 · ¿Cuál es la función principal de ManyChat en la estrategia?</summary><div class="ans"><p>Automatizar la entrega del recurso gratuito en Instagram. Detecta cuando un usuario comenta una palabra clave (como "QUIERO") y le envía de inmediato el enlace de la página de captura por mensaje privado.</p></div></details>
+
+<details class="qa"><summary>Q8 · ¿Por qué no se debe enviar al prospecto a una página de gracias tradicional?</summary><div class="ans"><p>Porque una página de gracias convencional desperdicia la atención inmediata del prospecto. En su lugar, se redirige a una página réplica con la oferta de ventas directa y la invitación a una comunidad de WhatsApp.</p></div></details>
+
+<details class="qa"><summary>Q9 · ¿Qué es una etiqueta (Tag) en Systeme.io?</summary><div class="ans"><p>Es una marca digital interna en el CRM que se le asigna automáticamente a un usuario cuando completa un formulario, permitiendo activar flujos de trabajo específicos para ese grupo.</p></div></details>
+
+<details class="qa"><summary>Q10 · ¿Qué es el enlace de checkout personalizado de afiliado?</summary><div class="ans"><p>Es la URL directa a la página de pago de Hotmart que contiene tu código de referencia al final (ej. <code>ref=69H</code>), asegurando que al procesarse la transacción, la comisión ingrese a tu cuenta.</p></div></details>
+
+<details class="qa"><summary>Q11 · ¿Qué información básica se debe capturar en la página de registro?</summary><div class="ans"><p>Principalmente la dirección de correo electrónico del usuario. Reducir los campos requeridos al mínimo incrementa significativamente la tasa de conversión de registro.</p></div></details>
+
+<h2>Nivel Avanzado (12–22)</h2>
+
+<details class="qa"><summary>Q12 · ¿Cómo se valida si un nicho de mercado en Hotmart tiene suficiente demanda antes de crear el embudo?</summary><div class="ans"><p>Se analiza el volumen mensual de búsquedas en plataformas de palabras clave como VidIQ. Un volumen igual o mayor a 3.000–50.000 búsquedas mensuales para términos clave (ej. "curso CapCut") confirma un nicho altamente validado.</p></div></details>
+
+<details class="qa"><summary>Q13 · ¿Por qué aparece el mensaje "Código no válido" en Systeme.io y cómo se soluciona?</summary><div class="ans"><p>Ocurre por incompatibilidades en el formato al copiar código desde archivos de texto descargados o blocs de notas. Se soluciona pidiendo a ChatGPT que imprima el código directamente en el chat para copiarlo directamente.</p></div></details>
+
+<details class="qa"><summary>Q14 · ¿Cómo se corrigen los márgenes y franjas blancas en la versión móvil de Systeme.io?</summary><div class="ans"><p>Seleccionando el bloque de código HTML en el editor de Systeme.io, cambiando a la vista móvil e ingresando valores negativos (entre <code>-6px</code> y <code>-10px</code>) en el campo de márgenes/posición.</p></div></details>
+
+<details class="qa"><summary>Q15 · ¿Cómo se vincula el formulario de Systeme.io a un Pop-up emergente mediante ChatGPT?</summary><div class="ans"><p>Se copia el código del formulario generado en Systeme.io y se le entrega a ChatGPT solicitándole que lo encapsule dentro de una estructura modal JavaScript/HTML asociada al evento clic de los botones CTA de la página.</p></div></details>
+
+<details class="qa"><summary>Q16 · ¿Cómo se configura una regla de automatización tras el envío de un formulario?</summary><div class="ans"><p>En la etapa del formulario en Systeme.io, se entra a "Reglas de automatización", se añade la regla "Registro en etapa", se asigna la acción "Agregar etiqueta" y se configura la redirección hacia una URL personalizada.</p></div></details>
+
+<details class="qa"><summary>Q17 · ¿Cuál es el propósito del banner superior rojo en la página de ventas réplica?</summary><div class="ans"><p>Notificar de inmediato al usuario que su recurso gratuito fue enviado por correo, al mismo tiempo que se le ofrece acceso directo e inmediato uniéndose a la comunidad VIP de WhatsApp.</p></div></details>
+
+<details class="qa"><summary>Q18 · ¿Por qué es necesario verificar un dominio propio en la configuración de email marketing?</summary><div class="ans"><p>Para autenticar la reputación del remitente y evitar que los correos automáticos sean clasificados como SPAM o entregados en la pestaña de promociones por los proveedores de correo.</p></div></details>
+
+<details class="qa"><summary>Q19 · ¿Cómo se estructura el primer correo de la secuencia en el Workflow de Systeme.io?</summary><div class="ans"><p>Se programa para enviarse 10 minutos después de asignada la etiqueta. Su objetivo es entregar el enlace directo de descarga del Lead Magnet y hacer una transición sutil recordando la oferta de la página réplica.</p></div></details>
+
+<details class="qa"><summary>Q20 · ¿Por qué se debe incluir un tiempo de espera de 10 minutos antes del primer correo?</summary><div class="ans"><p>Para dar tiempo suficiente al usuario de revisar la página de ventas réplica a la que fue redirigido inmediatamente después de ingresar su correo en la página de captura.</p></div></details>
+
+<details class="qa"><summary>Q21 · ¿Qué se debe verificar en el enlace de checkout en modo incógnito para confirmar la comisión?</summary><div class="ans"><p>Se debe revisar el parámetro al final de la URL o en el pie de página del checkout (<code>Ref: XXXXXXX</code>) y confirmar que coincida de forma exacta con la referencia alfanumérica de tu cuenta de afiliado en Hotmart.</p></div></details>
+
+<details class="qa"><summary>Q22 · ¿Qué función cumple la comunidad de WhatsApp en la nutrición de prospectos?</summary><div class="ans"><p>Sirve como un canal de comunicación de alta tasa de apertura donde se comparten consejos, tutoriales, contenido de valor, cupones de descuento y avisos de escasez para generar múltiples contactos con la marca.</p></div></details>
+
+<h2>Nivel PRO (23–33)</h2>
+
+<details class="qa"><summary>Q23 · ¿Cuál es la lógica detrás de la regla de los 3 a 7 contactos en el marketing de afiliados?</summary><div class="ans"><p>La mayoría de los usuarios no compran un producto digital en su primera interacción. Requieren entre 3 y 7 impactos publicitarios o informativos continuos (vía correos, WhatsApp y contenidos) para construir confianza y tomar la decisión de compra.</p></div></details>
+
+<details class="qa"><summary>Q24 · En una proyección con 1.200 leads capturados y un producto de 50 USD (50% comisión), ¿cuál es el ingreso estimado a una conversión del 3%?</summary><div class="ans"><p>A una tasa del 3%, 1.200 leads generan 36 ventas. Con una comisión neta de 25 USD por venta, el ingreso total proyectado es de <b>900 USD</b>.</p></div></details>
+
+<details class="qa"><summary>Q25 · ¿Cómo se realiza la transición óptima de tráfico orgánico a campañas pagadas en Meta Ads?</summary><div class="ans"><p>Una vez validado que el embudo convierte orgánicamente, se invierten presupuestos iniciales (ej. 100 USD) en Meta Ads para dirigir tráfico masivo directo al disparador de ManyChat o a la página de captura, multiplicando el volumen de leads.</p></div></details>
+
+<details class="qa"><summary>Q26 · ¿Qué ventaja técnica ofrece recrear la página del productor frente a enviar tráfico directo al link de afiliado convencional?</summary><div class="ans"><p>Permite instalar píxeles propios de seguimiento (Meta Pixel, Google Analytics), añadir banners de urgencia, integrar botones hacia la comunidad de WhatsApp propia y controlar la experiencia del usuario.</p></div></details>
+
+<details class="qa"><summary>Q27 · ¿Cómo se gestionan los límites del plan gratuito de Systeme.io cuando la base supera los 2.000 contactos?</summary><div class="ans"><p>Se realiza una actualización (<em>upgrade</em>) al plan Startup (17 USD/mes), o bien se depuran listas eliminando contactos inactivos que no abren correos para mantener la base de datos optimizada en el plan gratis.</p></div></details>
+
+<details class="qa"><summary>Q28 · ¿Qué métrica del panel de Systeme.io indica si la página de captura está fallando?</summary><div class="ans"><p>La tasa de conversión de la página de registro. Si el porcentaje de visitantes que ingresa su correo es inferior al 20%, indica que el titular, el diseño o la propuesta del Lead Magnet deben ser ajustados.</p></div></details>
+
+<details class="qa"><summary>Q29 · ¿Cómo evitar bloqueos de enlaces en Instagram al utilizar automatizaciones con ManyChat?</summary><div class="ans"><p>Utilizando dominios personalizados propios en Systeme.io en lugar de enlaces acortadores genéricos sospechosos, y configurando límites razonables en la frecuencia de envío de mensajes en ManyChat.</p></div></details>
+
+<details class="qa"><summary>Q30 · ¿Cómo se estructuran los correos del día 1 y día 2 en la secuencia automatizada para maximizar ventas?</summary><div class="ans"><p>El correo del día 1 aborda el problema principal del prospecto mostrando cómo el producto lo resuelve; el correo del día 2 introduce elementos de urgencia, prueba social, garantía de Hotmart y cupones de descuento.</p></div></details>
+
+<details class="qa"><summary>Q31 · ¿Qué se debe hacer si el productor modifica la página de ventas original en Hotmart?</summary><div class="ans"><p>Se debe solicitar a ChatGPT que actualice el código de la página réplica con los nuevos mocaps o textos del productor, manteniendo intactos los enlaces de checkout de afiliado y el banner de WhatsApp.</p></div></details>
+
+<details class="qa"><summary>Q32 · ¿Por qué es estratégico ofrecer un producto con comisión asignada por el 'último clic'?</summary><div class="ans"><p>Porque garantiza que todo el esfuerzo de retargeting y nutrición a través de tus correos y grupo de WhatsApp reconozca tu enlace como el definitivo al momento de la compra.</p></div></details>
+
+<details class="qa"><summary>Q33 · ¿Cuál es la clave de la constancia para alcanzar ventas recurrentes de 1.000+ USD mensuales?</summary><div class="ans"><p>Publicar contenido con llamadas a la acción entre 4 y 5 veces por semana de manera constante para alimentar de forma ininterrumpida el flujo de leads hacia el embudo automatizado.</p></div></details>
+
+<div class="panel-nav"><button class="btn ghost" type="button" data-goto="4">← PROMPTS</button><span class="pn-i">6 / 10</span><button class="btn ghost" type="button" data-goto="6">ERRORES →</button></div>
+</section>
+
+<!-- ==================== ERRORES ==================== -->
+<section class="tab-panel" id="p-errores" data-t="ERRORES: Matriz de Resolución de Problemas" data-short="ERRORES" role="tabpanel" aria-label="Errores">
+<h1>Matriz de resolución de problemas</h1>
+<p class="lead">Los fallos más comunes del sistema, su causa raíz y la solución paso a paso. Consulta esta tabla antes de pedir ayuda externa.</p>
+
+<div class="tw"><table class="tbl">
+<thead><tr><th>Problema / Error</th><th>Causa Raíz</th><th>Solución Paso a Paso</th></tr></thead>
+<tbody>
+<tr><td>"Código HTML no válido" en Systeme.io</td><td>Caracteres corruptos al copiar desde bloc de notas o archivos adjuntos.</td><td>Pedir a ChatGPT que imprima el código HTML formateado directamente dentro de la ventana de chat e insertarlo nuevamente.</td></tr>
+<tr><td>Márgenes blancos laterales en la página web</td><td>Configuración por defecto de padding del contenedor HTML.</td><td>Ajustar la posición y márgenes del bloque HTML a valores negativos (<code>-50</code> escritorio, <code>-10</code> o <code>-6</code> móvil).</td></tr>
+<tr><td>El botón de la página de captura no abre el Pop-up</td><td>El enlace del botón no tiene asignado el disparador de la ventana emergente.</td><td>Re-generar con ChatGPT el script indicando explícitamente que asocie el id del formulario al evento <code>onClick</code> de los botones.</td></tr>
+<tr><td>Las comisiones no se acreditan en Hotmart</td><td>Se utilizó el enlace de la página de ventas en lugar de la referencia personalizada de pago.</td><td>Asegurar que los botones de la página réplica contengan el link de la Página de Pago Personalizada con el código <code>ref</code> verificado.</td></tr>
+<tr><td>Los correos llegan a la carpeta de SPAM</td><td>El correo remitente no tiene un dominio propio verificado.</td><td>Registrar y verificar un dominio propio en la configuración de correos de Systeme.io agregando las entradas DNS CNAME.</td></tr>
+<tr><td>ManyChat no responde a los comentarios</td><td>La publicación no está seleccionada en la automatización o la cuenta no es profesional.</td><td>Verificar que la publicación esté vinculada, que la cuenta sea profesional y que la palabra clave coincida exactamente (sin tildes, en mayúsculas).</td></tr>
+<tr><td>El usuario no recibe el correo de entrega</td><td>El flujo de trabajo no se activó porque la etiqueta no se asignó.</td><td>Comprobar en Contactos que el lead tiene la etiqueta <code>acceso al pack subtitulos capcut</code> y que el workflow está publicado.</td></tr>
+<tr><td>La redirección tras el registro no funciona</td><td>La URL personalizada está mal pegada o la página réplica no está publicada.</td><td>Verificar que la página réplica tiene URL pública y que la acción del formulario apunta exactamente a esa URL.</td></tr>
+<tr><td>La página réplica se ve distinta a la original</td><td>ChatGPT no recibió la URL de referencia o el HTML no está completo.</td><td>Volver a enviar el prompt con la URL oficial incluida y pedir que entregue el código en un solo bloque.</td></tr>
+<tr><td>El SVG animado no se ve en la pestaña CRÉDITOS</td><td>El contenedor no se montó al activar la pestaña.</td><td>Recargar la página; el sistema monta automáticamente el SVG al activar cada pestaña. Si persiste, revisar la consola.</td></tr>
+</tbody>
+</table></div>
+
+<div class="note"><p style="margin:0"><b>Método general de depuración:</b> identifica el paso exacto donde falla → comprueba que el paso anterior está verificado → corrige una sola cosa → vuelve a probar. No cambies varias cosas a la vez: si algo mejora, no sabrás qué fue.</p></div>
+
+<div class="panel-nav"><button class="btn ghost" type="button" data-goto="5">← 33 Preguntas (Q&A)</button><span class="pn-i">7 / 10</span><button class="btn ghost" type="button" data-goto="7">RESUMEN →</button></div>
+</section>
+
+<!-- ==================== RESUMEN ==================== -->
+<section class="tab-panel" id="p-resumen" data-t="RESUMEN: Métricas, Proyecciones y Glosario" data-short="RESUMEN" role="tabpanel" aria-label="Resumen">
+<h1>Resumen, métricas y glosario</h1>
+<p class="lead">Lo esencial del sistema en una sola página: qué has construido, cómo se mide y qué significa cada término.</p>
+
+<h2>Qué has construido</h2>
+<div class="card">
+<ol>
+<li><b>Una fuente de tráfico:</b> Instagram con contenido y automatización de comentarios.</li>
+<li><b>Una página de captura:</b> generada con ChatGPT, alojada gratis en Systeme.io, con pop-up integrado.</li>
+<li><b>Un CRM etiquetado:</b> cada registro queda marcado con <code>acceso al pack subtitulos capcut</code>.</li>
+<li><b>Una página réplica:</b> con la oferta del productor, tu checkout de afiliado y un banner hacia WhatsApp.</li>
+<li><b>Un flujo de 3 correos:</b> entrega, beneficios y urgencia.</li>
+<li><b>Una comunidad de WhatsApp:</b> canal de nutrición de alta apertura.</li>
+<li><b>Un panel de métricas:</b> contactos, aperturas, clics y conversión.</li>
+</ol>
+</div>
+
+<h2>Métricas clave</h2>
+<div class="tw"><table class="tbl">
+<thead><tr><th>Métrica</th><th>Valor de referencia</th><th>Qué hacer si está por debajo</th></tr></thead>
+<tbody>
+<tr><td>Tasa de conversión del embudo</td><td>1% – 3%</td><td>Revisar la secuencia de correos y la coherencia del Lead Magnet con el producto.</td></tr>
+<tr><td>Tasa de conversión de la página de captura</td><td>≥ 20%</td><td>Ajustar titular, diseño o propuesta del recurso gratuito.</td></tr>
+<tr><td>Apertura del correo de entrega</td><td>≥ 40%</td><td>Verificar dominio remitente y asunto.</td></tr>
+<tr><td>Clics al checkout</td><td>≥ 5% de los leads</td><td>Reforzar el banner de WhatsApp y la llamada a la acción del correo 2.</td></tr>
+</tbody></table></div>
+
+<h2>Proyección de facturación</h2>
+<div class="card">
+<p><b>Escenario:</b> 1.200 leads capturados, producto de 50 USD, comisión del 50%, conversión del 3%.</p>
+<ul>
+<li>Compradores: 1.200 × 0,03 = <b>36</b></li>
+<li>Comisión por venta: 50 × 0,50 = <b>25 USD</b></li>
+<li><b>Facturación neta: 36 × 25 = 900 USD</b> en 10–15 días</li>
+</ul>
+<p style="margin-bottom:0"><b>Con conversión al 1%:</b> 12 ventas × 25 USD = <b>300 USD</b>.</p>
+</div>
+
+<h2>Glosario de términos técnicos</h2>
+<div class="glos">
+<div class="g"><dt>Hotmart</dt><dd>Plataforma global de distribución de productos digitales que gestiona pagos y sistemas de afiliación.</dd></div>
+<div class="g"><dt>Comisión por Último Clic</dt><dd>Regla de atribución en Hotmart que otorga el 100% de la comisión al afiliado cuyo enlace recibió el último clic antes del pago.</dd></div>
+<div class="g"><dt>Cookie Eterno</dt><dd>Tecnología de rastreo que almacena la referencia del afiliado de forma indefinida en el navegador del usuario.</dd></div>
+<div class="g"><dt>Lead Magnet (Carnada)</dt><dd>Recurso de valor gratuito (plantilla, ebook, pack) entregado a cambio de los datos de contacto de un prospecto.</dd></div>
+<div class="g"><dt>Systeme.io</dt><dd>Plataforma todo-en-uno para la creación de embudos de venta, páginas web, CRM y automatización de email marketing.</dd></div>
+<div class="g"><dt>Página de Captura (Landing Page)</dt><dd>Página web diseñada con el único objetivo de obtener la dirección de correo electrónico del visitante.</dd></div>
+<div class="g"><dt>Pop-up</dt><dd>Ventana emergente que aparece en la pantalla para solicitar información de registro antes de descargar un recurso.</dd></div>
+<div class="g"><dt>Lead Tag (Etiqueta)</dt><dd>Identificador interno en el CRM que segmenta a los usuarios según sus acciones en el embudo.</dd></div>
+<div class="g"><dt>Página Réplica</dt><dd>Recreación de la página de ventas del productor creada mediante código para insertar botones de afiliado y un banner superior de comunidad.</dd></div>
+<div class="g"><dt>Workflow (Flujo de Trabajo)</dt><dd>Cadena de acciones automatizadas que se ejecutan en función de desencadenantes específicos (ej. etiquetas).</dd></div>
+<div class="g"><dt>ManyChat</dt><dd>Herramienta de automatización de respuestas en redes sociales que conecta mensajes directos con palabras clave en comentarios.</dd></div>
+<div class="g"><dt>Hotlink</dt><dd>Enlace de divulgación de afiliado que incluye tu código de referencia.</dd></div>
+</div>
+
+<h2>Checklist final de entrega</h2>
+<label class="chk"><input type="checkbox" data-cid="f1"><span>Embudo completo montado y probado con un contacto de prueba.</span></label>
+<label class="chk"><input type="checkbox" data-cid="f2"><span>Comisión verificada en el checkout en incógnito.</span></label>
+<label class="chk"><input type="checkbox" data-cid="f3"><span>Secuencia de 3 correos activa.</span></label>
+<label class="chk"><input type="checkbox" data-cid="f4"><span>Comunidad de WhatsApp integrada.</span></label>
+<label class="chk"><input type="checkbox" data-cid="f5"><span>Métricas revisadas y documentadas.</span></label>
+
+<div class="panel-nav"><button class="btn ghost" type="button" data-goto="6">← ERRORES</button><span class="pn-i">8 / 10</span><button class="btn ghost" type="button" data-goto="8">FUENTES →</button></div>
+</section>
+
+<!-- ==================== FUENTES ==================== -->
+<section class="tab-panel" id="p-fuentes" data-t="FUENTES: Documentación Oficial y Referencias" data-short="FUENTES" role="tabpanel" aria-label="Fuentes">
+<h1>Fuentes confiables y documentación oficial</h1>
+<p class="lead">Documentación oficial de cada herramienta utilizada en el sistema. Consulta siempre la fuente antes de tomar una decisión crítica.</p>
+
+<div class="card">
+<h3>1. Hotmart — Centro de Ayuda y Documentación Oficial para Afiliados</h3>
+<p>Guía oficial de asignación de comisiones, reglas de Hotlinks, Cookie Eterno y Atribución por Último Clic.</p>
+<div class="codebox"><button class="copy" type="button">COPIAR</button><pre>https://help.hotmart.com</pre></div>
+</div>
+
+<div class="card">
+<h3>2. Systeme.io — Documentación Oficial y Base de Conocimientos</h3>
+<p>Tutoriales oficiales de configuración de túneles de venta, dominios personalizados, límites de planes y reglas de automatización/flujos de trabajo.</p>
+<div class="codebox"><button class="copy" type="button">COPIAR</button><pre>https://systeme.io/help</pre></div>
+</div>
+
+<div class="card">
+<h3>3. ManyChat — Documentación Oficial de Automatizaciones en Instagram</h3>
+<p>Guía de integración de Instagram Comment Automation y disparadores de palabras clave por DM.</p>
+<div class="codebox"><button class="copy" type="button">COPIAR</button><pre>https://support.manychat.com</pre></div>
+</div>
+
+<div class="card">
+<h3>4. OpenAI — Guía Oficial de Prompting y Desarrollo con ChatGPT</h3>
+<p>Documentación sobre sintaxis, generación de código HTML/CSS responsivo y estructuración de modelos de lenguaje.</p>
+<div class="codebox"><button class="copy" type="button">COPIAR</button><pre>https://platform.openai.com/docs</pre></div>
+</div>
+
+<div class="card">
+<h3>5. Fuente del método</h3>
+<p>Video de referencia: «Creé un Sistema para Vender en Hotmart con ChatGPT (100% GRATIS)».</p>
+</div>
+
+<div class="note warn"><p style="margin:0"><b>Nota de verificación:</b> los enlaces y la documentación pueden cambiar con el tiempo. Este tutorial no afirma haber verificado el contenido actual de cada URL en la fecha de generación; se incluyen como referencia estable de las fuentes oficiales.</p></div>
+
+<div class="panel-nav"><button class="btn ghost" type="button" data-goto="7">← RESUMEN</button><span class="pn-i">9 / 10</span><button class="btn ghost" type="button" data-goto="9">CRÉDITOS →</button></div>
+</section>
+
+<!-- ==================== CRÉDITOS ==================== -->
+<section class="tab-panel" id="p-creditos" data-t="CRÉDITOS" data-short="CRÉDITOS" role="tabpanel" aria-label="Créditos">
+<h1>Créditos</h1>
+<div class="svgwrap" id="svgCreditos" data-svg="creditos"></div>
+<p class="svg-cap">Ilustración compartida con INICIO: el embudo animado que convierte comentarios en comisiones.</p>
+<div class="card accent" style="text-align:center;padding:28px 16px">
+<div style="font-size:2.1rem;font-weight:800;letter-spacing:-.02em;color:var(--acc);margin-bottom:4px">Rubén Sbarsky</div>
+<div style="font-size:1.05rem;color:var(--muted);margin-bottom:18px">Autor del tutorial</div>
+<p style="margin-bottom:0;font-size:.92rem;color:var(--muted)">Guía maestra para construir un sistema de ventas automatizado en Hotmart con ChatGPT y Systeme.io sin coste de herramientas.</p>
+</div>
+
+<h2>Información del documento</h2>
+<div class="card">
+<div class="tw"><table class="tbl">
+<tbody>
+<tr><td>Versión</td><td>V001</td></tr>
+<tr><td>Fecha de creación</td><td>31/10/2026 — 15:15:33</td></tr>
+<tr><td>Idioma</td><td>Castellano</td></tr>
+<tr><td>Formato</td><td>HTML autónomo, un solo archivo, sin dependencias externas</td></tr>
+<tr><td>Fuente principal</td><td>tutorial-sistema-ventas-hotmart-chatgpt.md</td></tr>
+<tr><td>Fuente principal</td><td>tutorial-sistema-ventas-hotmart-chatgpt.md</td></tr>
+</tbody></table></div>
+</div>
+
+<div class="note ok">
+<p style="margin:0"><b>Verificación honesta:</b> este archivo se ha construido respetando el contenido de la fuente principal. No se han podido ejecutar pruebas en un navegador real desde el entorno de generación; las comprobaciones realizadas son de inspección estática del código. Se recomienda abrir el archivo y verificar manualmente: navegación entre las 10 pestañas, apertura y cierre del índice por los cuatro métodos, funcionamiento del SVG en INICIO y CRÉDITOS, botones COPIAR, buscador, tema claro/oscuro, tamaño de letra, checklists con persistencia e impresión.</p>
+</div>
+
+<div class="panel-nav"><button class="btn ghost" type="button" data-goto="8">← FUENTES</button><span class="pn-i">10 / 10</span><button class="btn ghost" type="button" data-goto="0">Volver a INICIO →</button></div>
+</section>
+
+</main>
+
+<button id="toTop" type="button" aria-label="Volver arriba">↑</button>
+
+<script>
+(function(){
+'use strict';
+
+/* ============================================================
+   UTILIDADES DE ALMACENAMIENTO SEGURO
+   ============================================================ */
+var LS = (function(){
+  var ok = true;
+  try{ var k='__t'; localStorage.setItem(k,'1'); localStorage.removeItem(k); }
+  catch(e){ ok = false; }
+  return {
+    get: function(key, def){
+      if(!ok) return def;
+      try{ var v = localStorage.getItem(key); return v===null ? def : v; }
+      catch(e){ return def; }
+    },
+    set: function(key, val){
+      if(!ok) return false;
+      try{ localStorage.setItem(key, val); return true; }
+      catch(e){ return false; }
+    }
+  };
+})();
+
+/* ============================================================
+   REFERENCIAS DEL DOM
+   ============================================================ */
+var sections = Array.prototype.slice.call(document.querySelectorAll('.tab-panel'));
+var chipsWrap = document.getElementById('chips');
+var dr        = document.getElementById('dr');
+var mb        = document.getElementById('mb');
+var drList    = document.getElementById('drList');
+var drResults = document.getElementById('drResults');
+var drHint    = document.getElementById('drHint');
+var qInput    = document.getElementById('q');
+var prog      = document.getElementById('prog');
+var toTop     = document.getElementById('toTop');
+var tpl       = document.getElementById('svgSrc');
+var svgTplStr = tpl ? tpl.innerHTML : '';
+
+var current = 0;
+var chipEls = [];
+var idxEls  = [];
+var svgInstances = {};
+var svgCounter = 0;
+
+/* ============================================================
+   MONTAR SVG DESDE PLANTILLA ÚNICA
+   ============================================================ */
+function buildSvgInstance(suffix){
+  if(!svgTplStr) return '';
+  var uid = 'v' + (++svgCounter) + '_';
+  var s = svgTplStr
+    .replace(/id="bgG"/g,    'id="bgG_'+uid+'"')
+    .replace(/id="funG"/g,   'id="funG_'+uid+'"')
+    .replace(/id="funFill"/g,'id="funFill_'+uid+'"')
+    .replace(/id="coinG"/g,  'id="coinG_'+uid+'"')
+    .replace(/id="glowG"/g,  'id="glowG_'+uid+'"')
+    .replace(/id="glowG2"/g, 'id="glowG2_'+uid+'"')
+    .replace(/id="softGlow"/g,'id="softGlow_'+uid+'"')
+    .replace(/url\(#bgG\)/g,    'url(#bgG_'+uid+')')
+    .replace(/url\(#funG\)/g,   'url(#funG_'+uid+')')
+    .replace(/url\(#funFill\)/g,'url(#funFill_'+uid+')')
+    .replace(/url\(#coinG\)/g,  'url(#coinG_'+uid+')')
+    .replace(/url\(#glowG\)/g,  'url(#glowG_'+uid+')')
+    .replace(/url\(#glowG2\)/g, 'url(#glowG2_'+uid+')')
+    .replace(/url\(#softGlow\)/g,'url(#softGlow_'+uid+')');
+  return s;
+}
+
+function mountSvg(containerId, key){
+  var c = document.getElementById(containerId);
+  if(!c || c.querySelector('svg')) return;
+  var html = buildSvgInstance(key);
+  if(html){
+    c.innerHTML = html;
+    var svg = c.querySelector('svg');
+    if(svg){
+      svg.removeAttribute('xmlns');
+      svgInstances[containerId] = svg;
+    }
+  }
+}
+
+function mountVisibleSvgs(){
+  if(current === 0) mountSvg('svgInicio','inicio');
+  if(current === 9) mountSvg('svgCreditos','creditos');
+}
+
+function remountAll(){
+  ['svgInicio','svgCreditos'].forEach(function(id){
+    var c = document.getElementById(id);
+    if(c) c.innerHTML = '';
+  });
+  svgInstances = {};
+  mountVisibleSvgs();
+}
+
+/* Eliminar la plantilla inerte del DOM para evitar animaciones invisibles */
+if(tpl && tpl.parentNode){
+  tpl.parentNode.removeChild(tpl);
+}
+
+/* ============================================================
+   NAVEGACIÓN ENTRE PESTAÑAS
+   ============================================================ */
+function go(i){
+  if(i<0 || i>=sections.length) return;
+  current = i;
+  sections.forEach(function(s, j){
+    s.classList.toggle('active', j === i);
+  });
+  chipEls.forEach(function(c, j){
+    c.classList.toggle('on', j === i);
+    c.setAttribute('aria-selected', j === i ? 'true' : 'false');
+  });
+  idxEls.forEach(function(a, j){
+    a.classList.toggle('on', j === i);
+  });
+  LS.set('tut_tab', String(i));
+  mountVisibleSvgs();
+  checkVisibleSvgs();
+  if(chipEls[i] && chipEls[i].scrollIntoView){
+    try{ chipEls[i].scrollIntoView({block:'nearest', inline:'center', behavior:'smooth'}); }catch(e){}
+  }
+  updateProg();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* Generar los chips de la barra de navegación */
+sections.forEach(function(s, i){
+  var label = s.getAttribute('data-short') || s.getAttribute('data-t') || ('Sección ' + (i+1));
+  var b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'chip';
+  b.textContent = label;
+  b.setAttribute('role','tab');
+  b.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+  b.setAttribute('aria-controls', s.id);
+  b.addEventListener('click', function(){ go(i); });
+  chipsWrap.appendChild(b);
+  chipEls.push(b);
+});
+
+/* Botones con data-goto dentro del contenido */
+document.addEventListener('click', function(e){
+  var t = e.target.closest('[data-goto]');
+  if(!t) return;
+  var i = parseInt(t.getAttribute('data-goto'), 10);
+  if(!isNaN(i)) go(i);
+});
+
+/* ============================================================
+   PANEL LATERAL DE ÍNDICE
+   ============================================================ */
+function tg(open){
+  if(typeof open === 'undefined'){
+    dr.classList.toggle('o');
+  } else {
+    dr.classList.toggle('o', open);
+  }
+  var isOpen = dr.classList.contains('o');
+  mb.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  if(isOpen){
+    qInput.value = '';
+    drResults.hidden = true;
+    drList.hidden = false;
+    drHint.textContent = 'Secciones';
+    setTimeout(function(){ qInput.focus(); }, 260);
+  }
+}
+
+/* Generar entradas del índice desde las secciones reales */
+sections.forEach(function(s, i){
+  var label = s.getAttribute('data-t') || (s.querySelector('h2') ? s.querySelector('h2').textContent : ('Sección ' + (i+1)));
+  var a = document.createElement('a');
+  a.href = '#';
+  a.textContent = (i ? i + '. ' : '') + label;
+  a.setAttribute('role','button');
+  a.addEventListener('click', function(ev){
+    ev.preventDefault();
+    go(i);
+    tg(false);
+  });
+  drList.appendChild(a);
+  idxEls.push(a);
+});
+
+/* Búsqueda dentro del índice */
+function doSearch(term){
+  var t = (term || '').trim().toLowerCase();
+  if(!t){
+    drResults.hidden = true;
+    drList.hidden = false;
+    drHint.textContent = 'Secciones';
+    drResults.innerHTML = '';
+    return;
+  }
+  drList.hidden = true;
+  drResults.hidden = false;
+  drResults.innerHTML = '';
+  drHint.textContent = 'Resultados';
+  var found = 0;
+  sections.forEach(function(s, i){
+    var title = s.getAttribute('data-t') || '';
+    var text = s.textContent || '';
+    var hay = text.toLowerCase().indexOf(t);
+    if(hay === -1) return;
+    found++;
+    /* Extraer un fragmento de contexto alrededor de la coincidencia */
+    var start = Math.max(0, hay - 40);
+    var frag = text.substring(start, start + 100).replace(/\s+/g,' ').trim();
+    if(start > 0) frag = '…' + frag;
+    if(hay + 60 < text.length) frag = frag + '…';
+    var a = document.createElement('a');
+    a.href = '#';
+    a.className = 'res';
+    var b = document.createElement('b');
+    b.textContent = (i ? i + '. ' : '') + (title || ('Sección ' + i));
+    var sp = document.createElement('span');
+    sp.textContent = frag;
+    a.appendChild(b);
+    a.appendChild(sp);
+    a.addEventListener('click', function(ev){
+      ev.preventDefault();
+      go(i);
+      tg(false);
+    });
+    drResults.appendChild(a);
+  });
+  if(!found){
+    var p = document.createElement('p');
+    p.className = 'nores';
+    p.textContent = 'Sin resultados para «' + term + '».';
+    drResults.appendChild(p);
+  }
+}
+
+var searchTimer = null;
+qInput.addEventListener('input', function(){
+  if(searchTimer) clearTimeout(searchTimer);
+  searchTimer = setTimeout(function(){ doSearch(qInput.value); }, 180);
+});
+
+mb.addEventListener('click', function(){ tg(); });
+
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape') tg(false);
+});
+
+document.addEventListener('click', function(e){
+  if(!e.target.closest('#dr,#mb')) tg(false);
+});
+
+var ix = document.getElementById('ix');
+if(ix) ix.addEventListener('click', function(){ tg(true); });
+
+/* ============================================================
+   TEMA CLARO / OSCURO
+   ============================================================ */
+var thmBtn = document.getElementById('thm');
+function applyTheme(light){
+  document.body.classList.toggle('light', !!light);
+  LS.set('tut_light', light ? '1' : '0');
+  remountAll();
+}
+if(thmBtn){
+  thmBtn.addEventListener('click', function(){
+    applyTheme(!document.body.classList.contains('light'));
+  });
+}
+
+/* ============================================================
+   TAMAÑO DE LETRA
+   ============================================================ */
+var fsMinus = document.getElementById('fsMinus');
+var fsPlus  = document.getElementById('fsPlus');
+function applyFs(n){
+  n = Math.max(13, Math.min(22, n));
+  document.documentElement.style.setProperty('--fs', n + 'px');
+  LS.set('tut_fs', String(n));
+}
+if(fsMinus) fsMinus.addEventListener('click', function(){
+  var cur = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--fs'), 10) || 16;
+  applyFs(cur - 1);
+});
+if(fsPlus) fsPlus.addEventListener('click', function(){
+  var cur = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--fs'), 10) || 16;
+  applyFs(cur + 1);
+});
+
+/* ============================================================
+   PROGRESO DE LECTURA
+   ============================================================ */
+function updateProg(){
+  var h = document.documentElement;
+  var max = h.scrollHeight - h.clientHeight;
+  var y = h.scrollTop || document.body.scrollTop;
+  var pct = max > 0 ? (y / max) * 100 : 0;
+  prog.style.width = pct.toFixed(2) + '%';
+  if(y > 400) toTop.classList.add('show');
+  else toTop.classList.remove('show');
+}
+window.addEventListener('scroll', updateProg, {passive:true});
+window.addEventListener('resize', updateProg);
+if(toTop) toTop.addEventListener('click', function(){
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+
+/* ============================================================
+   BOTONES COPIAR
+   ============================================================ */
+function copyText(text){
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    return navigator.clipboard.writeText(text);
+  }
+  return new Promise(function(resolve, reject){
+    try{
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.top = '-9999px';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      var ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      ok ? resolve() : reject(new Error('execCommand falló'));
+    }catch(err){ reject(err); }
+  });
+}
+
+document.addEventListener('click', function(e){
+  var btn = e.target.closest('.copy');
+  if(!btn) return;
+  var box = btn.closest('.codebox');
+  if(!box) return;
+  var pre = box.querySelector('pre');
+  if(!pre) return;
+  var text = pre.textContent;
+  copyText(text).then(function(){
+    btn.textContent = '✓ COPIADO';
+    btn.classList.add('ok');
+    btn.classList.remove('fail');
+    setTimeout(function(){
+      btn.textContent = 'COPIAR';
+      btn.classList.remove('ok');
+    }, 1800);
+  }).catch(function(){
+    btn.textContent = '✗ FALLO';
+    btn.classList.add('fail');
+    btn.classList.remove('ok');
+    setTimeout(function(){
+      btn.textContent = 'COPIAR';
+      btn.classList.remove('fail');
+    }, 2400);
+    /* Alternativa: seleccionar el texto para copia manual */
+    try{
+      var range = document.createRange();
+      range.selectNodeContents(pre);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }catch(err){}
+  });
+});
+
+/* ============================================================
+   CHECKLISTS CON PERSISTENCIA
+   ============================================================ */
+var checks = document.querySelectorAll('.chk input[type="checkbox"]');
+checks.forEach(function(input){
+  var cid = input.getAttribute('data-cid');
+  if(!cid) return;
+  if(LS.get('tut_chk_' + cid, '0') === '1'){
+    input.checked = true;
+    var label = input.closest('.chk');
+    if(label) label.classList.add('done');
+  }
+  input.addEventListener('change', function(){
+    LS.set('tut_chk_' + cid, input.checked ? '1' : '0');
+    var label = input.closest('.chk');
+    if(label) label.classList.toggle('done', input.checked);
+  });
+});
+
+/* ============================================================
+   IMPRESIÓN
+   ============================================================ */
+var prtBtn = document.getElementById('prt');
+if(prtBtn){
+  prtBtn.addEventListener('click', function(){
+    /* Preparar todos los SVG antes de imprimir */
+    ['svgInicio','svgCreditos'].forEach(function(id){
+      var c = document.getElementById(id);
+      if(c && !c.querySelector('svg')){
+        c.innerHTML = buildSvgInstance(id);
+      }
+    });
+    /* Abrir detalles cerrados temporalmente */
+    var closed = [];
+    document.querySelectorAll('details.qa:not([open])').forEach(function(d){
+      closed.push(d);
+      d.setAttribute('open','');
+    });
+    var restore = function(){
+      closed.forEach(function(d){ d.removeAttribute('open'); });
+      window.removeEventListener('afterprint', restore);
+    };
+    window.addEventListener('afterprint', restore);
+    try{
+      window.print();
+    }catch(err){
+      alert('Abre este archivo directamente en el navegador y utiliza Ctrl+P o Cmd+P.');
+    }
+    setTimeout(restore, 1200);
+  });
+}
+
+/* ============================================================
+   COMPROBACIÓN PERIÓDICA DE SVG VISIBLE
+   ============================================================ */
+function checkVisibleSvgs(){
+  if(current === 0){
+    var c1 = document.getElementById('svgInicio');
+    if(c1 && !c1.querySelector('svg')) mountSvg('svgInicio','inicio');
+  }
+  if(current === 9){
+    var c2 = document.getElementById('svgCreditos');
+    if(c2 && !c2.querySelector('svg')) mountSvg('svgCreditos','creditos');
+  }
+}
+setInterval(checkVisibleSvgs, 2000);
+
+/* ============================================================
+   RESTAURAR ESTADO AL CARGAR
+   ============================================================ */
+(function restoreState(){
+  var savedTab = parseInt(LS.get('tut_tab', '0'), 10);
+  if(!isNaN(savedTab) && savedTab >= 0 && savedTab < sections.length){
+    current = savedTab;
+  }
+  var savedFs = parseInt(LS.get('tut_fs', '16'), 10);
+  if(!isNaN(savedFs)) applyFs(savedFs);
+  var savedLight = LS.get('tut_light', '0') === '1';
+  if(savedLight) document.body.classList.add('light');
+
+  /* Aplicar estado inicial sin scroll */
+  sections.forEach(function(s, j){ s.classList.toggle('active', j === current); });
+  chipEls.forEach(function(c, j){
+    c.classList.toggle('on', j === current);
+    c.setAttribute('aria-selected', j === current ? 'true' : 'false');
+  });
+  idxEls.forEach(function(a, j){ a.classList.toggle('on', j === current); });
+
+  /* Montar SVG inicial */
+  setTimeout(function(){
+    mountVisibleSvgs();
+    updateProg();
+  }, 60);
+})();
+
+/* Restaurar el estado de los SVG al redimensionar/volver a la pestaña */
+window.addEventListener('pageshow', function(){ checkVisibleSvgs(); });
+
+})();
+</script>
+</body>
+</html>
